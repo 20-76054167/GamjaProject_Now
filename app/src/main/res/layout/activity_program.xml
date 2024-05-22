@@ -25,24 +25,47 @@
 
 
     <TextView
-        android:id="@+id/test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="This is Program page"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_centerInParent="true"/>
+        android:id="@+id/programname"
+        android:layout_width="230dp"
+        android:layout_height="40dp"
+        android:text="제목:"
+        android:textSize="24dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="174dp"
+        android:layout_marginTop="86dp" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:srcCompat="@tools:sample/avatars"
-        android:layout_centerInParent="true"
-        />
+        android:id="@+id/programView"
+        android:layout_width="150dp"
+        android:layout_height="220dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="86dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/programdirector"
+        android:layout_width="230dp"
+        android:layout_height="40dp"
+        android:text="장르:"
+        android:textSize="24dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="174dp"
+        android:layout_marginTop="134dp" />
+
+    <TextView
+        android:id="@+id/programsummary"
+        android:layout_width="231dp"
+        android:layout_height="133dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="174dp"
+        android:layout_marginTop="174dp"
+        android:text="줄거리:"
+        android:textSize="24dp" />
 
 
 </RelativeLayout>

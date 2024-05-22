@@ -152,7 +152,6 @@ import com.example.gamjaproject_now.API.APIController;
 import com.example.gamjaproject_now.API.CountAPI;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
@@ -166,21 +165,26 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     int index = 0;
-    ImageView iv_image;
-    ImageView iv_image2;
-    ImageView iv_image3;
-    ImageView iv_image4;
-    ImageView iv_image5;
-    ImageView iv_image6;
-    ImageView iv_image7;
-    ImageView iv_image8;
-    ImageView iv_image9;
 
-    ImageView iv_image10;
+
+//    ImageView iv_image;
+//    ImageView iv_image2;
+//    ImageView iv_image3;
+//    ImageView iv_image4;
+//    ImageView iv_image5;
+//    ImageView iv_image6;
+//    ImageView iv_image7;
+//    ImageView iv_image8;
+//    ImageView iv_image9;
+//
+//    ImageView iv_image10;
     ImageView[] iv_imagearr = new ImageView[10];
     TextView[] testarr = new TextView[10];
 
-    Array[] pu = new Array[10];
+    Button[] buttonTag = new Button[3];
+
+    Intent intent = new Intent(MainActivity.this, ProgramActivity.class);
+
 
 
     @Override
@@ -189,10 +193,15 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+
+
+
+
+
         // Setup button click listeners
-        Button buttonWebtoon = findViewById(R.id.button_webtoon);
-        Button buttonMovie = findViewById(R.id.button_movie);
-        Button buttonBook = findViewById(R.id.button_book);
+        buttonTag[0] = findViewById(R.id.button_webtoon);
+        buttonTag[1] = findViewById(R.id.button_movie);
+        buttonTag[2] = findViewById(R.id.button_book);
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -265,6 +274,16 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
+        Button.OnClickListener buttonTagmove = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
+                startActivity(intent);
+
+
+            }
+        };
+
 
 
 
@@ -306,8 +325,8 @@ public class MainActivity extends AppCompatActivity {
                     for (int i = 0; i < 10; i++) {
                         Log.d("img_link", "img_link : " + result[i].getImg());
                         testarr[i].append(result[i].getTitle());
-
                         new DownloadFilesTask().execute(result[i].getImg());
+
                     }
                     index = 0;
 
@@ -535,20 +554,28 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        buttonWebtoon.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, WebtoonActivity.class);
-            startActivity(intent);
-        });
+//        buttonWebtoon.setOnClickListener(v -> {
+//            Intent intent = new Intent(MainActivity.this, WebtoonActivity.class);
+//            startActivity(intent);
+//        });
+//
+//        buttonMovie.setOnClickListener(v -> {
+//            Intent intent = new Intent(MainActivity.this, MovieActivity.class);
+//            startActivity(intent);
+//        });
+//
+//        buttonBook.setOnClickListener(v -> {
+//            Intent intent = new Intent(MainActivity.this, BookActivity.class);
+//            startActivity(intent);
+//        });
 
-        buttonMovie.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, MovieActivity.class);
-            startActivity(intent);
-        });
 
-        buttonBook.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, BookActivity.class);
-            startActivity(intent);
-        });
+
+        buttonTag[0].setOnClickListener(buttonTagmove);
+        buttonTag[1].setOnClickListener(buttonTagmove);
+        buttonTag[2].setOnClickListener(buttonTagmove);
+
+
 
         testarr[0].setOnClickListener(listener);
         testarr[1].setOnClickListener(listener);
@@ -561,6 +588,17 @@ public class MainActivity extends AppCompatActivity {
         testarr[8].setOnClickListener(listener);
         testarr[9].setOnClickListener(listener);
 
+
+        iv_imagearr[0].setOnClickListener(listener);
+        iv_imagearr[1].setOnClickListener(listener);
+        iv_imagearr[2].setOnClickListener(listener);
+        iv_imagearr[3].setOnClickListener(listener);
+        iv_imagearr[4].setOnClickListener(listener);
+        iv_imagearr[5].setOnClickListener(listener);
+        iv_imagearr[6].setOnClickListener(listener);
+        iv_imagearr[7].setOnClickListener(listener);
+        iv_imagearr[8].setOnClickListener(listener);
+        iv_imagearr[9].setOnClickListener(listener);
 
 //        test.setOnClickListener(listener);
 //        test2.setOnClickListener(listener);
@@ -638,5 +676,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+
+
+
     }
 }
