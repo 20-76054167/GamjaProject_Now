@@ -40,6 +40,12 @@ public class CategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
 
+        Intent intent = getIntent();
+
+        String message = intent.getStringExtra("buttonText");
+        TextView category = (TextView) findViewById(R.id.categoryText);
+        category.setText(message);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

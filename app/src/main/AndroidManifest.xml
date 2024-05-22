@@ -25,11 +25,11 @@
         </activity>
         <activity
             android:name=".CategoryActivity"
-            android:exported="false"
+            android:exported="true"
             />
 
         <activity android:name=".ProgramActivity"
-            android:exported="false"
+            android:exported="true"
             />
 
 

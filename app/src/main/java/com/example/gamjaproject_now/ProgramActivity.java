@@ -4,6 +4,7 @@ package com.example.gamjaproject_now;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,6 +47,13 @@ public class ProgramActivity extends AppCompatActivity {
         programNA = (TextView) findViewById(R.id.programname);
         programSU = (TextView) findViewById(R.id.programsummary);
         programDi = (TextView) findViewById(R.id.programdirector);
+
+
+        Intent intent = getIntent();
+
+        String message = intent.getStringExtra("title");
+        Log.d("message", message);
+
 
 
 
