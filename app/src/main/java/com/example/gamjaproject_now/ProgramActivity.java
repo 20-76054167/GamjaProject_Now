@@ -4,18 +4,15 @@ package com.example.gamjaproject_now;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.gamjaproject_now.API.API;
+import com.example.gamjaproject_now.API.Content;
 import com.example.gamjaproject_now.API.APIController;
 
 import java.io.IOException;
@@ -51,8 +48,16 @@ public class ProgramActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        String message = intent.getStringExtra("title");
-        Log.d("message", message);
+
+        String title = intent.getStringExtra("title");
+        String director = intent.getStringExtra("director");
+        String description = intent.getStringExtra("description");
+        String image = intent.getStringExtra("image");
+        Log.d("message", title);
+        programNA.setText(title);
+        programDi.setText(director);
+        programSU.setText(description);
+        new ProgramActivity.DownloadFilesTask().execute(image);
 
 
 
@@ -60,11 +65,12 @@ public class ProgramActivity extends AppCompatActivity {
 
 
 
-        Call<API[]> call = APIController.getTestCall("movie_test", 2, 1);
-        call.enqueue(new Callback<API[]>() {
+
+        Call<Content[]> call = APIController.getTestCall("movie_test", 2, 1);
+        call.enqueue(new Callback<Content[]>() {
             @Override
-            public void onResponse(Call<API[]> call, Response<API[]> response) {
-                API[] result = response.body();
+            public void onResponse(Call<Content[]> call, Response<Content[]> response) {
+                Content[] result = response.body();
 
                 ////                if (result != null && result.length > 0) {
                 ////                    Log.d("img_link", "img_link : " + result[1].getImg());
@@ -75,10 +81,10 @@ public class ProgramActivity extends AppCompatActivity {
                 //                }
 
                     Log.d("img_link", "img_link : " + result[0].getImg());
-                    programNA.append(result[0].getTitle());
-                    programSU.append(result[0].getDescription());
-                    programDi.append(result[0].getDirector());
-                    new ProgramActivity.DownloadFilesTask().execute(result[0].getImg());
+                    //programNA.append(result[0].getTitle());
+                    //programSU.append(result[0].getDescription());
+                    //programDi.append(result[0].getDirector());
+                    //new ProgramActivity.DownloadFilesTask().execute(result[0].getImg());
 
 
 
@@ -87,7 +93,7 @@ public class ProgramActivity extends AppCompatActivity {
 
 
             @Override
-            public void onFailure(Call<API[]> call, Throwable t) {
+            public void onFailure(Call<Content[]> call, Throwable t) {
                 Log.d("결과", "실패 : " + t.getMessage());
             }
         });

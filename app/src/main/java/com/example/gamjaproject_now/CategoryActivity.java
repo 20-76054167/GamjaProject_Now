@@ -16,9 +16,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.gamjaproject_now.API.API;
+import com.example.gamjaproject_now.API.Content;
 import com.example.gamjaproject_now.API.APIController;
-import com.example.gamjaproject_now.API.CountAPI;
+import com.example.gamjaproject_now.API.Count;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -83,17 +83,17 @@ public class CategoryActivity extends AppCompatActivity {
         };
 
 
-        Call<CountAPI[]> countCall = APIController.getCountCall("movie_test");
-        countCall.enqueue(new Callback<CountAPI[]>() {
+        Call<Count[]> countCall = APIController.getCountCall("movie_test");
+        countCall.enqueue(new Callback<Count[]>() {
             @Override
-            public void onResponse(Call<CountAPI[]> call, Response<CountAPI[]> response) {
-                CountAPI[] result = response.body();
+            public void onResponse(Call<Count[]> call, Response<Count[]> response) {
+                Count[] result = response.body();
                 Log.d("c_link", "c_link : " + result[0].getCnt());
 //                int b = result[0].getCnt();
             }
 
             @Override
-            public void onFailure(Call<CountAPI[]> call, Throwable t) {
+            public void onFailure(Call<Count[]> call, Throwable t) {
                 Log.d("결과", "실패 : " + t.getMessage());
 
             }
@@ -101,11 +101,11 @@ public class CategoryActivity extends AppCompatActivity {
 
 
 
-        Call<API[]> call = APIController.getTestCall("movie_test", 2, 10);
-        call.enqueue(new Callback<API[]>() {
+        Call<Content[]> call = APIController.getTestCall("movie_test", 2, 10);
+        call.enqueue(new Callback<Content[]>() {
             @Override
-            public void onResponse(Call<API[]> call, Response<API[]> response) {
-                API[] result = response.body();
+            public void onResponse(Call<Content[]> call, Response<Content[]> response) {
+                Content[] result = response.body();
 
                 ////                if (result != null && result.length > 0) {
                 ////                    Log.d("img_link", "img_link : " + result[1].getImg());
@@ -127,7 +127,7 @@ public class CategoryActivity extends AppCompatActivity {
 
 
             @Override
-            public void onFailure(Call<API[]> call, Throwable t) {
+            public void onFailure(Call<Content[]> call, Throwable t) {
                 Log.d("결과", "실패 : " + t.getMessage());
             }
         });

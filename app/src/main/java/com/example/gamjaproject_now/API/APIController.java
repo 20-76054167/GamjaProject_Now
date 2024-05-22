@@ -13,10 +13,10 @@ public class APIController{
             .build();
     private static APIService function = retrofit.create(APIService.class);
     //    private static Call<API[]> testCall = function.getData("novel",5,3);
-    public static Call<API[]> getTestCall(String tableName, int page, int pagingUnit) {
-        return function.getData(tableName,page,pagingUnit);
+    public static Call<Content[]> getTestCall(String tableName, int page, int pagingUnit) {
+        return function.getPaginatedContents(tableName,page,pagingUnit);
     }
-    public static Call<CountAPI[]> getCountCall(String tableName) {
-        return function.getCount(tableName);
+    public static Call<Count[]> getCountCall(String tableName) {
+        return function.getContentCount(tableName);
     }
 }

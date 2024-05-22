@@ -2,7 +2,7 @@ package com.example.gamjaproject_now.API;
 
 import com.google.gson.annotations.SerializedName;
 
-public class API {
+public class Content {
     @SerializedName("id")
     private int id;
     @SerializedName("title")

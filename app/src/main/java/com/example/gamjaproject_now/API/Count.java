@@ -2,7 +2,7 @@ package com.example.gamjaproject_now.API;
 
 import com.google.gson.annotations.SerializedName;
 
-public class CountAPI {
+public class Count {
     public int getCnt() {
         return cnt;
     }

@@ -148,7 +148,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.gamjaproject_now.API.API;
+import com.example.gamjaproject_now.API.Content;
 import com.example.gamjaproject_now.API.APIController;
 
 import java.io.IOException;
@@ -163,7 +163,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     int index = 0;
 
-    private API[] result;
+    private Content[] result;
 
 
     ImageView[] iv_imagearr = new ImageView[10];
@@ -232,20 +232,21 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(result != null) {
+//        View.OnClickListener listener = new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(result != null) {
+//
+//                    Intent intentP = new Intent(MainActivity.this, ProgramActivity.class);
+//                    intentP.putExtra("result", result);
+//
+//                    startActivity(intentP);
+//                }else{
+//                    Toast.makeText(MainActivity.this, "data is not loaded yet", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        };
 
-                    Intent intentP = new Intent(MainActivity.this, ProgramActivity.class);
-                    intentP.putExtra("title", result);
-
-                    startActivity(intentP);
-                }else{
-                    Toast.makeText(MainActivity.this, "data is not loaded yet", Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
 
         Button.OnClickListener buttonTagmove = new View.OnClickListener() {
             @Override
@@ -265,27 +266,27 @@ public class MainActivity extends AppCompatActivity {
         buttonTag[1].setOnClickListener(buttonTagmove);
         buttonTag[2].setOnClickListener(buttonTagmove);
 
-        testArr[0].setOnClickListener(listener);
-        testArr[1].setOnClickListener(listener);
-        testArr[2].setOnClickListener(listener);
-        testArr[3].setOnClickListener(listener);
-        testArr[4].setOnClickListener(listener);
-        testArr[5].setOnClickListener(listener);
-        testArr[6].setOnClickListener(listener);
-        testArr[7].setOnClickListener(listener);
-        testArr[8].setOnClickListener(listener);
-        testArr[9].setOnClickListener(listener);
-
-        iv_imagearr[0].setOnClickListener(listener);
-        iv_imagearr[1].setOnClickListener(listener);
-        iv_imagearr[2].setOnClickListener(listener);
-        iv_imagearr[3].setOnClickListener(listener);
-        iv_imagearr[4].setOnClickListener(listener);
-        iv_imagearr[5].setOnClickListener(listener);
-        iv_imagearr[6].setOnClickListener(listener);
-        iv_imagearr[7].setOnClickListener(listener);
-        iv_imagearr[8].setOnClickListener(listener);
-        iv_imagearr[9].setOnClickListener(listener);
+//        testArr[0].setOnClickListener(listener);
+//        testArr[1].setOnClickListener(listener);
+//        testArr[2].setOnClickListener(listener);
+//        testArr[3].setOnClickListener(listener);
+//        testArr[4].setOnClickListener(listener);
+//        testArr[5].setOnClickListener(listener);
+//        testArr[6].setOnClickListener(listener);
+//        testArr[7].setOnClickListener(listener);
+//        testArr[8].setOnClickListener(listener);
+//        testArr[9].setOnClickListener(listener);
+//
+//        iv_imagearr[0].setOnClickListener(listener);
+//        iv_imagearr[1].setOnClickListener(listener);
+//        iv_imagearr[2].setOnClickListener(listener);
+//        iv_imagearr[3].setOnClickListener(listener);
+//        iv_imagearr[4].setOnClickListener(listener);
+//        iv_imagearr[5].setOnClickListener(listener);
+//        iv_imagearr[6].setOnClickListener(listener);
+//        iv_imagearr[7].setOnClickListener(listener);
+//        iv_imagearr[8].setOnClickListener(listener);
+//        iv_imagearr[9].setOnClickListener(listener);
 
 
 
@@ -293,21 +294,91 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void fetchDataFromApi() {
-        Call<API[]> call = APIController.getTestCall("movie_test", 1, 10);
-        call.enqueue(new Callback<API[]>() {
+        Call<Content[]> call = APIController.getTestCall("kpnovel", 1, 10);
+        call.enqueue(new Callback<Content[]>() {
+            Intent[] intent = new Intent[10];
             @Override
-            public void onResponse(Call<API[]> call, Response<API[]> response) {
+            public void onResponse(Call<Content[]> call, Response<Content[]> response) {
                 if (response.isSuccessful()) {
                     result = response.body();
+
                     for (int i = 0; i < 10; i++) {
                         Log.d("img_link", "img_link : " + result[i].getImg());
                         testArr[i].append(result[i].getTitle());
                         new DownloadFilesTask().execute(result[i].getImg());
 
+                        intent[i]=new Intent(MainActivity.this, ProgramActivity.class);
+                        intent[i].putExtra("title", result[i].getTitle().toString());
+                        intent[i].putExtra("director", result[i].getDirector().toString());
+                        intent[i].putExtra("description", result[i].getDescription().toString());
+                        intent[i].putExtra("image", result[i].getImg());
                     }
                 }else{
                     Toast.makeText(MainActivity.this, "API call failed", Toast.LENGTH_SHORT).show();
                 }
+
+
+                testArr[0].setOnClickListener(v -> {
+                    if (result != null) {
+
+                        startActivity(intent[0]);
+                    }
+                });
+                testArr[1].setOnClickListener(v -> {
+                    if (result != null) {
+
+                        startActivity(intent[1]);
+                    }
+                });
+                testArr[2].setOnClickListener(v -> {
+                    if (result != null) {
+
+                        startActivity(intent[2]);
+                    }
+                });
+                testArr[3].setOnClickListener(v -> {
+                    if (result != null) {
+
+                        startActivity(intent[3]);
+                    }
+                });
+                testArr[4].setOnClickListener(v -> {
+                    if (result != null) {
+
+                        startActivity(intent[4]);
+                    }
+                });
+                testArr[5].setOnClickListener(v -> {
+                    if (result != null) {
+
+                        startActivity(intent[5]);
+                    }
+                });
+                testArr[6].setOnClickListener(v -> {
+                    if (result != null) {
+
+                        startActivity(intent[6]);
+                    }
+                });
+                testArr[7].setOnClickListener(v -> {
+                    if (result != null) {
+
+                        startActivity(intent[7]);
+                    }
+                });
+                testArr[8].setOnClickListener(v -> {
+                    if (result != null) {
+
+                        startActivity(intent[8]);
+                    }
+                });
+                testArr[9].setOnClickListener(v -> {
+                    if (result != null) {
+
+                        startActivity(intent[9]);
+                    }
+                });
+
                 ////                if (result != null && result.length > 0) {
                 ////                    Log.d("img_link", "img_link : " + result[1].getImg());
                 ////                    test.append(result[1].getTitle());
@@ -321,7 +392,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<API[]> call, Throwable t) {
+            public void onFailure(Call<Content[]> call, Throwable t) {
                 Log.d("결과", "실패 : " + t.getMessage());
             }
         });
