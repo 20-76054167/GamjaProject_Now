@@ -130,6 +130,8 @@
 
 package com.example.gamjaproject_now;
 
+
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -150,10 +152,12 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.gamjaproject_now.API.Content;
 import com.example.gamjaproject_now.API.APIController;
+import com.example.gamjaproject_now.API.Count;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -163,7 +167,19 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     int index = 0;
 
+    int page = 1;
+    int pagingUnit = 10;
+
+    int P;
+
+    int All;
+
     private Content[] result;
+    private Count[] resultP;
+    String[] tableList = {"couplay", "kakaowebtoon", "kpnovel", "naverwebtoon", "netflix", "watcha"};
+
+    Random rand = new Random();
+
 
 
     ImageView[] iv_imagearr = new ImageView[10];
@@ -180,15 +196,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Setup button click listeners
-        buttonTag[0] = findViewById(R.id.button_webtoon);
-        buttonTag[1] = findViewById(R.id.button_movie);
-        buttonTag[2] = findViewById(R.id.button_book);
+        buttonTag[0] = (Button)findViewById(R.id.button_webtoon);
+        buttonTag[1] = (Button)findViewById(R.id.button_movie);
+        buttonTag[2] = (Button)findViewById(R.id.button_book);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+//            return insets;
+//        });
 
         testArr[0] = (TextView) findViewById(R.id.test);
         testArr[1] = (TextView) findViewById(R.id.test2);
@@ -227,11 +243,66 @@ public class MainActivity extends AppCompatActivity {
 //
 //            }
 //        });
+        Button.OnClickListener buttonTagmove = new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentC = new Intent(MainActivity.this, CategoryActivity.class);
 
-        fetchDataFromApi();
+               String buttonText = buttonTag[0].getText().toString();
+               intentC.putExtra("buttonText", buttonText);
+                startActivity(intentC);
+
+            }
+        };
+        Button.OnClickListener buttonTagmove2 = new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentC = new Intent(MainActivity.this, CategoryActivity.class);
+
+                String buttonText = buttonTag[1].getText().toString();
+                intentC.putExtra("buttonText", buttonText);
+
+
+                startActivity(intentC);
+
+            }
+        };
+        Button.OnClickListener buttonTagmove3 = new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentC = new Intent(MainActivity.this, CategoryActivity.class);
+
+                String buttonText = buttonTag[2].getText().toString();
+                intentC.putExtra("buttonText", buttonText);
+
+                startActivity(intentC);
+
+            }
+        };
+
+        buttonTag[0].setOnClickListener(buttonTagmove);
+        buttonTag[1].setOnClickListener(buttonTagmove2);
+        buttonTag[2].setOnClickListener(buttonTagmove3);
 
 
 
+
+        Call<Count[]> callP = APIController.getCountCall(tableList[rand.nextInt(6)]);
+        callP.enqueue(new Callback<Count[]>() {
+            @Override
+            public void onResponse(Call<Count[]> call, Response<Count[]> response) {
+                    Count[] resultP = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Count[]> call, Throwable t) {
+
+            }
+        });
+
+        String tableName = tableList[rand.nextInt(6)];
+
+        fetchDataFromApi(tableName, page, pagingUnit);
 //        View.OnClickListener listener = new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -248,23 +319,15 @@ public class MainActivity extends AppCompatActivity {
 //        };
 
 
-        Button.OnClickListener buttonTagmove = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentC = new Intent(MainActivity.this, CategoryActivity.class);
-                String buttonText = buttonTag[0].getText().toString();
-                String buttonText2 = buttonTag[1].getText().toString();
-                String buttonText3 = buttonTag[2].getText().toString();
-                intentC.putExtra("buttonText", buttonText);
-
-                startActivity(intentC);
-            }
-        };
+//        buttonTag[0].setOnClickListener(v->{
+//            Intent intentC = new Intent(MainActivity.this, CategoryActivity.class);
+//            intentC.putExtra("buttonText", buttonTag[0].getText().toString());
+//            startActivity(intentC);
+//        });
 
 
-        buttonTag[0].setOnClickListener(buttonTagmove);
-        buttonTag[1].setOnClickListener(buttonTagmove);
-        buttonTag[2].setOnClickListener(buttonTagmove);
+
+
 
 //        testArr[0].setOnClickListener(listener);
 //        testArr[1].setOnClickListener(listener);
@@ -287,32 +350,34 @@ public class MainActivity extends AppCompatActivity {
 //        iv_imagearr[7].setOnClickListener(listener);
 //        iv_imagearr[8].setOnClickListener(listener);
 //        iv_imagearr[9].setOnClickListener(listener);
-
-
-
     }
 
 
-    private void fetchDataFromApi() {
-        Call<Content[]> call = APIController.getTestCall("kpnovel", 1, 10);
+    private void fetchDataFromApi(String tableList, int page, int pagingUnit) {
+        Call<Content[]> call = APIController.getTestCall(tableList, page, pagingUnit);
         call.enqueue(new Callback<Content[]>() {
-            Intent[] intent = new Intent[10];
+            Intent[] intent = new Intent[pagingUnit];
+
             @Override
             public void onResponse(Call<Content[]> call, Response<Content[]> response) {
                 if (response.isSuccessful()) {
                     result = response.body();
-
-                    for (int i = 0; i < 10; i++) {
-                        Log.d("img_link", "img_link : " + result[i].getImg());
-                        testArr[i].append(result[i].getTitle());
-                        new DownloadFilesTask().execute(result[i].getImg());
-
-                        intent[i]=new Intent(MainActivity.this, ProgramActivity.class);
-                        intent[i].putExtra("title", result[i].getTitle().toString());
-                        intent[i].putExtra("director", result[i].getDirector().toString());
-                        intent[i].putExtra("description", result[i].getDescription().toString());
-                        intent[i].putExtra("image", result[i].getImg());
+                    for(All = 0; All<pagingUnit; All++) {
+//                        Log.d("img_link", "img_link : " + result[i].getImg());
+                        testArr[All].append(result[All].getTitle());
+                        new DownloadFilesTask().execute(result[All].getImg());
+                        intent[All] = new Intent(MainActivity.this, ProgramActivity.class);
+//                        intent[All].putExtra("tableName", tableList);
+                        Log.d("mid", String.valueOf(result[All].getId()));
+                        intent[All].putExtra("tableName", tableList);
+                        intent[All].putExtra("id", result[All].getId());
+                        intent[All].putExtra("title", result[All].getTitle());
+                        intent[All].putExtra("director", result[All].getDirector());
+                        intent[All].putExtra("description", result[All].getDescription());
+                        intent[All].putExtra("image", result[All].getImg());
+                        intent[All].putExtra("actor", result[All].getActor());
                     }
+
                 }else{
                     Toast.makeText(MainActivity.this, "API call failed", Toast.LENGTH_SHORT).show();
                 }
@@ -320,75 +385,105 @@ public class MainActivity extends AppCompatActivity {
 
                 testArr[0].setOnClickListener(v -> {
                     if (result != null) {
-
                         startActivity(intent[0]);
                     }
                 });
                 testArr[1].setOnClickListener(v -> {
                     if (result != null) {
-
                         startActivity(intent[1]);
                     }
                 });
                 testArr[2].setOnClickListener(v -> {
                     if (result != null) {
-
                         startActivity(intent[2]);
                     }
                 });
                 testArr[3].setOnClickListener(v -> {
                     if (result != null) {
-
                         startActivity(intent[3]);
                     }
                 });
                 testArr[4].setOnClickListener(v -> {
                     if (result != null) {
-
                         startActivity(intent[4]);
                     }
                 });
                 testArr[5].setOnClickListener(v -> {
                     if (result != null) {
-
                         startActivity(intent[5]);
                     }
                 });
                 testArr[6].setOnClickListener(v -> {
                     if (result != null) {
-
                         startActivity(intent[6]);
                     }
                 });
                 testArr[7].setOnClickListener(v -> {
                     if (result != null) {
-
                         startActivity(intent[7]);
                     }
                 });
                 testArr[8].setOnClickListener(v -> {
                     if (result != null) {
-
                         startActivity(intent[8]);
                     }
                 });
                 testArr[9].setOnClickListener(v -> {
                     if (result != null) {
-
                         startActivity(intent[9]);
                     }
                 });
-
-                ////                if (result != null && result.length > 0) {
-                ////                    Log.d("img_link", "img_link : " + result[1].getImg());
-                ////                    test.append(result[1].getTitle());
-                ////                    new DownloadFilesTask().execute(result[1].getImg());
-                //                } else {
-                //                    Log.e("API Response", "Response is null or empty");
-                //                }
-
+                iv_imagearr[0].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[0]);
+                    }
+                });
+                iv_imagearr[1].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[1]);
+                    }
+                });
+                iv_imagearr[2].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[2]);
+                    }
+                });
+                iv_imagearr[3].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[3]);
+                    }
+                });
+                iv_imagearr[4].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[4]);
+                    }
+                });
+                iv_imagearr[5].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[5]);
+                    }
+                });
+                iv_imagearr[6].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[6]);
+                    }
+                });
+                iv_imagearr[7].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[7]);
+                    }
+                });
+                iv_imagearr[8].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[8]);
+                    }
+                });
+                iv_imagearr[9].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[9]);
+                    }
+                });
                 index = 0;
-
             }
 
             @Override

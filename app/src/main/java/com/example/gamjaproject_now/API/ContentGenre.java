@@ -27,4 +27,11 @@ public class ContentGenre {
     @SerializedName("genre_id")
     private int genre_id;
 
+    @Override
+    public String toString() {
+        return "ContentGenre{" +
+                "id=" + id +
+                ", genre_id=" + genre_id +
+                '}';
+    }
 }

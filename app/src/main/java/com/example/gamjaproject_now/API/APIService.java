@@ -47,13 +47,13 @@ public interface APIService {
     @GET("application/api/getContentGenreById")
     Call<ContentGenre[]> getContentGenreById(
             @Query("tableName") String tableName,
-            @Query("genre_id") int genre_id
+            @Query("id") int id
     );
 
     @GET("application/api/getContentGenreByIdCount")
     Call<Count[]> getContentGenreByIdCount(
             @Query("tableName") String tableName,
-            @Query("genre_id") int genre_id
+            @Query("id") int id
     );
 
     @GET("application/api/getGenreNamesByContentId")

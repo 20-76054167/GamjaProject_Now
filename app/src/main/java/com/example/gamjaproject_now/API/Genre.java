@@ -26,4 +26,12 @@ public class Genre {
     public void setGenre_name(String genre_name) {
         this.genre_name = genre_name;
     }
+
+    @Override
+    public String toString() {
+        return "Genre{" +
+                "genre_id=" + genre_id +
+                ", genre_name='" + genre_name + '\'' +
+                '}';
+    }
 }

@@ -15,4 +15,10 @@ public class Count {
     private int cnt;
 
 
+    @Override
+    public String toString() {
+        return "Count{" +
+                "cnt=" + cnt +
+                '}';
+    }
 }

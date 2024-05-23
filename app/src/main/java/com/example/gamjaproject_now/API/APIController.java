@@ -13,6 +13,9 @@ public class APIController{
             .build();
     private static APIService function = retrofit.create(APIService.class);
     //    private static Call<API[]> testCall = function.getData("novel",5,3);
+    public static Call<ContentGenre[]> getGenreCall(String tableName, int id) {
+        return function.getContentGenreById(tableName, id);
+    }
     public static Call<Content[]> getTestCall(String tableName, int page, int pagingUnit) {
         return function.getPaginatedContents(tableName,page,pagingUnit);
     }
