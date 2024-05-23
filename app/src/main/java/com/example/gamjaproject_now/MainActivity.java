@@ -180,6 +180,9 @@ public class MainActivity extends AppCompatActivity {
 
     Random rand = new Random();
 
+    Intent[] intent = new Intent[pagingUnit];
+
+
 
 
     ImageView[] iv_imagearr = new ImageView[10];
@@ -292,6 +295,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Count[]> call, Response<Count[]> response) {
                     Count[] resultP = response.body();
+                    P = resultP[0].getCnt();
             }
 
             @Override
@@ -301,8 +305,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         String tableName = tableList[rand.nextInt(6)];
+        int PageRandom = (int) (Math.random() * P) + 1;
+        fetchDataFromApi(tableName, PageRandom, 10);
 
-        fetchDataFromApi(tableName, page, pagingUnit);
 //        View.OnClickListener listener = new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -356,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
     private void fetchDataFromApi(String tableList, int page, int pagingUnit) {
         Call<Content[]> call = APIController.getTestCall(tableList, page, pagingUnit);
         call.enqueue(new Callback<Content[]>() {
-            Intent[] intent = new Intent[pagingUnit];
+
 
             @Override
             public void onResponse(Call<Content[]> call, Response<Content[]> response) {
