@@ -19,6 +19,9 @@ public class APIController{
     public static Call<Content[]> getTestCall(String tableName, int page, int pagingUnit) {
         return function.getPaginatedContents(tableName,page,pagingUnit);
     }
+    public static Call<Content[]> getGenreTestCall(String tableName, int genre_id){
+        return function.getContentsByGenreId(tableName, genre_id);
+    }
     public static Call<Count[]> getCountCall(String tableName) {
         return function.getContentCount(tableName);
     }

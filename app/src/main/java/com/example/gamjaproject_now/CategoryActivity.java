@@ -39,8 +39,8 @@ public class CategoryActivity extends AppCompatActivity {
     String BM = "영화";
     String BN = "소설";
 
-    ImageView[] iv_imagearr = new ImageView[10];
-    TextView[] testArr = new TextView[10];
+    ImageView[] iv_imagearr = new ImageView[21];
+    TextView[] testArr = new TextView[21];
 
     Content[] result;
 
@@ -49,6 +49,7 @@ public class CategoryActivity extends AppCompatActivity {
     String[] NoveltableList = {"kpnovel"};
 
     Random randT = new Random();
+    int b = 4;
 
 
 
@@ -57,6 +58,9 @@ public class CategoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
+        String CategoryRandomTableWebtoon = WebtooontableList[randT.nextInt(2)];
+        String CategoryRandomTableMovie = MovietableList[randT.nextInt(3)];
+        String CategoryRandomTableNovel = NoveltableList[randT.nextInt(1)];
 
         Intent intent = getIntent();
 
@@ -83,6 +87,17 @@ public class CategoryActivity extends AppCompatActivity {
         testArr[7] = (TextView) findViewById(R.id.test8);
         testArr[8] = (TextView) findViewById(R.id.test9);
         testArr[9] = (TextView) findViewById(R.id.test10);
+        testArr[10] = (TextView) findViewById(R.id.test11);
+        testArr[11] = (TextView) findViewById(R.id.test12);
+        testArr[12] = (TextView) findViewById(R.id.test13);
+        testArr[13] = (TextView) findViewById(R.id.test14);
+        testArr[14] = (TextView) findViewById(R.id.test15);
+        testArr[15] = (TextView) findViewById(R.id.test16);
+        testArr[16] = (TextView) findViewById(R.id.test17);
+        testArr[17] = (TextView) findViewById(R.id.test18);
+        testArr[18] = (TextView) findViewById(R.id.test19);
+        testArr[19] = (TextView) findViewById(R.id.test20);
+        testArr[20] = (TextView) findViewById(R.id.test21);
 
         iv_imagearr[0] = (ImageView) findViewById(R.id.imageView);
         iv_imagearr[1] = (ImageView) findViewById(R.id.imageView2);
@@ -94,6 +109,17 @@ public class CategoryActivity extends AppCompatActivity {
         iv_imagearr[7] = (ImageView) findViewById(R.id.imageView8);
         iv_imagearr[8] = (ImageView) findViewById(R.id.imageView9);
         iv_imagearr[9] = (ImageView) findViewById(R.id.imageView10);
+        iv_imagearr[10] = (ImageView) findViewById(R.id.imageView11);
+        iv_imagearr[11] = (ImageView) findViewById(R.id.imageView12);
+        iv_imagearr[12] = (ImageView) findViewById(R.id.imageView13);
+        iv_imagearr[13] = (ImageView) findViewById(R.id.imageView14);
+        iv_imagearr[14] = (ImageView) findViewById(R.id.imageView15);
+        iv_imagearr[15] = (ImageView) findViewById(R.id.imageView16);
+        iv_imagearr[16] = (ImageView) findViewById(R.id.imageView17);
+        iv_imagearr[17] = (ImageView) findViewById(R.id.imageView18);
+        iv_imagearr[18] = (ImageView) findViewById(R.id.imageView19);
+        iv_imagearr[19] = (ImageView) findViewById(R.id.imageView20);
+        iv_imagearr[20] = (ImageView) findViewById(R.id.imageView21);
 
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
@@ -104,28 +130,29 @@ public class CategoryActivity extends AppCompatActivity {
         };
 
 
-//        Call<Count[]> countCall = APIController.getCountCall("movie_test");
-//        countCall.enqueue(new Callback<Count[]>() {
-//            @Override
-//            public void onResponse(Call<Count[]> call, Response<Count[]> response) {
-//                Count[] result = response.body();
-//                Log.d("c_link", "c_link : " + result[0].getCnt());
-////                int b = result[0].getCnt();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Count[]> call, Throwable t) {
-//                Log.d("결과", "실패 : " + t.getMessage());
-//
-//            }
-//        });
+        Call<Count[]> countCall = APIController.getCountCall("kakaowebtoon");
+        countCall.enqueue(new Callback<Count[]>() {
+            @Override
+            public void onResponse(Call<Count[]> call, Response<Count[]> response) {
+                Count[] result = response.body();
+                Log.d("Count", "Count : " + result[0].getCnt());
+//                b = result[0].getCnt();
+            }
+
+            @Override
+            public void onFailure(Call<Count[]> call, Throwable t) {
+                Log.d("결과", "실패 : " + t.getMessage());
+
+            }
+        });
+
 
         if((message.equals(BW))) {
-            fetchDataFromApi(WebtooontableList[randT.nextInt(2)], 1, 10);
-        }else if((message.equals(BM))){
-            fetchDataFromApi(MovietableList[randT.nextInt(3)], 1, 10);
+            fetchDataFromApi(CategoryRandomTableWebtoon, (int)(Math.random()*b)+1, 21);
+        }else if((message.equals(BN))){
+            fetchDataFromApi(CategoryRandomTableNovel, (int)(Math.random()*b)+1, 21);
         }else{
-            fetchDataFromApi(NoveltableList[randT.nextInt(1)], 1, 10);
+            fetchDataFromApi(CategoryRandomTableMovie, (int)(Math.random()*b)+1, 21);
         }
 
 
@@ -177,6 +204,7 @@ public class CategoryActivity extends AppCompatActivity {
                         intent[All].putExtra("image", result[All].getImg());
                         intent[All].putExtra("id", result[All].getId());
                         intent[All].putExtra("actor", result[All].getActor());
+                        intent[All].putExtra("tableName", tableList);
 
                     }
 
@@ -235,6 +263,61 @@ public class CategoryActivity extends AppCompatActivity {
                         startActivity(intent[9]);
                     }
                 });
+                testArr[10].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[10]);
+                    }
+                });
+                testArr[11].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[11]);
+                    }
+                });
+                testArr[12].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[12]);
+                    }
+                });
+                testArr[13].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[13]);
+                    }
+                });
+                testArr[14].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[14]);
+                    }
+                });
+                testArr[15].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[15]);
+                    }
+                });
+                testArr[16].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[16]);
+                    }
+                });
+                testArr[17].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[17]);
+                    }
+                });
+                testArr[18].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[18]);
+                    }
+                });
+                testArr[19].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[19]);
+                    }
+                });
+                testArr[20].setOnClickListener(v ->{
+                    if (result != null){
+                        startActivity(intent[20]);
+                    }
+                });
                 iv_imagearr[0].setOnClickListener(v -> {
                     if (result != null) {
                         startActivity(intent[0]);
@@ -283,6 +366,61 @@ public class CategoryActivity extends AppCompatActivity {
                 iv_imagearr[9].setOnClickListener(v -> {
                     if (result != null) {
                         startActivity(intent[9]);
+                    }
+                });
+                iv_imagearr[10].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[10]);
+                    }
+                });
+                iv_imagearr[11].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[11]);
+                    }
+                });
+                iv_imagearr[12].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[12]);
+                    }
+                });
+                iv_imagearr[13].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[13]);
+                    }
+                });
+                iv_imagearr[14].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[14]);
+                    }
+                });
+                iv_imagearr[15].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[15]);
+                    }
+                });
+                iv_imagearr[16].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[16]);
+                    }
+                });
+                iv_imagearr[17].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[17]);
+                    }
+                });
+                iv_imagearr[18].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[18]);
+                    }
+                });
+                iv_imagearr[19].setOnClickListener(v -> {
+                    if (result != null) {
+                        startActivity(intent[19]);
+                    }
+                });
+                iv_imagearr[20].setOnClickListener(v ->{
+                    if (result != null){
+                        startActivity(intent[20]);
                     }
                 });
                 index = 0;

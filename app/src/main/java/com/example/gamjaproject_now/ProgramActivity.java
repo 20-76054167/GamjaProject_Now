@@ -24,6 +24,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,16 +39,20 @@ public class ProgramActivity extends AppCompatActivity {
     TextView programDi;
 
     TextView programSU;
+    String[] tableList = {"couplay", "kakaowebtoon", "kpnovel", "naverwebtoon", "netflix", "watcha"};
+    String[] GenretableList = { "couplay_genre", "kakaowebtoon_genre", "kpnovel_genre", "naverwebtoon_genre", "netflix_genre", "watcha_genre"};
     ImageView[] iv_imagearr = new ImageView[10];
     TextView[] testArr = new TextView[10];
     private Content[] resultG;
 
     private Content[] result;
 
-
+    String genretableN;
+    int Gid;
     Bitmap bitmap;
     int index = 0;
     int All;
+    Random rand;
 
 
     @Override
@@ -68,8 +73,26 @@ public class ProgramActivity extends AppCompatActivity {
 
         String tableName = intent.getStringExtra("tableName");
 
-        Log.d("pid", String.valueOf(id));
-//        Log.d("ptableName", tableName);
+        Log.d("p-id", String.valueOf(id));
+        Log.d("tablename", tableName != null? tableName : "DefaultMessage");
+
+        if(tableName.equals(tableList[0])){
+            genretableN="couplay_genre";
+        }else if(tableName.equals(tableList[1])){
+            genretableN="kakaowebtoon_genre";
+        }else if(tableName.equals(tableList[2])){
+            genretableN="kpnovel_genre";
+        }else if(tableName.equals(tableList[3])){
+            genretableN="naverwebtoon_genre";
+        }else if(tableName.equals(tableList[4])){
+            genretableN="netflix_genre";
+        }else if(tableName.equals(tableList[5])){
+            genretableN="watcha_genre";
+        }
+        Log.d("genretableName", genretableN != null? genretableN : "DefaultMessage");
+
+
+//        Log.d("tablename", tableName);
 
 //        Call<ContentGenre[]> call13 = APIController.getGenreCall(tableName, id);
 //        call13.enqueue(new Callback<ContentGenre[]>() {
@@ -146,9 +169,38 @@ public class ProgramActivity extends AppCompatActivity {
         iv_imagearr[8] = (ImageView) findViewById(R.id.imageView9);
         iv_imagearr[9] = (ImageView) findViewById(R.id.imageView10);
 
-        fetchDataFromApi("movie_test", 1, 10);
 
 
+
+        Call<ContentGenre[]> genrecall = APIController.getGenreCall(genretableN, id);
+
+        genrecall.enqueue(new Callback<ContentGenre[]>() {
+            @Override
+            public void onResponse(Call<ContentGenre[]> genrecall, Response<ContentGenre[]> response) {
+                if(response.isSuccessful()){
+                    ContentGenre[] resultGenre = response.body();
+                    Gid = resultGenre[0].getGenre_id();
+                    Log.d("genre_id", String.valueOf(Gid));
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ContentGenre[]> call, Throwable t) {
+
+            }
+        });
+
+
+
+
+
+
+
+
+        int PageRandom = (int) (Math.random()*5) + 1;
+
+        fetchDataFromApi(tableName, PageRandom, 10);
     }
 
 
@@ -166,6 +218,7 @@ public class ProgramActivity extends AppCompatActivity {
                         new ProgramActivity.DownloadFilesTask().execute(result[All].getImg());
 
                         intent[All] = new Intent(ProgramActivity.this, ProgramActivity.class);
+                        intent[All].putExtra("tableName", tableList);
                         intent[All].putExtra("title", result[All].getTitle());
                         intent[All].putExtra("director", result[All].getDirector());
                         intent[All].putExtra("description", result[All].getDescription());
