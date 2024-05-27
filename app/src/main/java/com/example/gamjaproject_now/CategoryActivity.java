@@ -49,7 +49,6 @@ public class CategoryActivity extends AppCompatActivity {
     String[] NoveltableList = {"kpnovel"};
 
     Random randT = new Random();
-    int b = 4;
 
 
 
@@ -147,12 +146,25 @@ public class CategoryActivity extends AppCompatActivity {
         });
 
 
-        if((message.equals(BW))) {
-            fetchDataFromApi(CategoryRandomTableWebtoon, (int)(Math.random()*b)+1, 21);
-        }else if((message.equals(BN))){
-            fetchDataFromApi(CategoryRandomTableNovel, (int)(Math.random()*b)+1, 21);
-        }else{
-            fetchDataFromApi(CategoryRandomTableMovie, (int)(Math.random()*b)+1, 21);
+
+        if((message.equals(BW))) { //9, 30
+            if(CategoryRandomTableWebtoon.equals(WebtooontableList[0])) {
+                fetchDataFromApi(CategoryRandomTableWebtoon, (int) (Math.random() * 9) + 1, 21);
+            }else if(CategoryRandomTableWebtoon.equals(WebtooontableList[1])){
+                fetchDataFromApi(CategoryRandomTableWebtoon, (int) (Math.random() * 30) + 1, 21);
+            }
+        }else if((message.equals(BN))){ //200
+            if(CategoryRandomTableNovel.equals(NoveltableList[0])) {
+                fetchDataFromApi(CategoryRandomTableNovel, (int) (Math.random() * 200) + 1, 21);
+            }
+        }else{ // 5, 14, 8
+            if(CategoryRandomTableMovie.equals(MovietableList[0])) {
+                fetchDataFromApi(CategoryRandomTableMovie, (int) (Math.random() * 5) + 1, 21);
+            }else if(CategoryRandomTableMovie.equals(MovietableList[1])) {
+                fetchDataFromApi(CategoryRandomTableMovie, (int) (Math.random() * 14) + 1, 21);
+            }else if(CategoryRandomTableMovie.equals(MovietableList[2])){
+                fetchDataFromApi(CategoryRandomTableMovie, (int) (Math.random() * 8) + 1, 21);
+            }
         }
 
 

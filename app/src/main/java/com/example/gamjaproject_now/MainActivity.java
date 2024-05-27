@@ -179,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
     String[] tableList = {"couplay", "kakaowebtoon", "kpnovel", "naverwebtoon", "netflix", "watcha"};
 
     Random rand = new Random();
+    int PageRandom;
 
 
 
@@ -326,9 +327,22 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
+//        137, 224, 4816, 657, 305, 200;
         String tableName = tableList[rand.nextInt(6)];
-        int PageRandom = (int) (Math.random()*5) + 1;
+        if(tableName.equals(tableList[0])) {
+            PageRandom = (int) (Math.random() * 5) + 1;
+        }else if(tableName.equals(tableList[1])){
+            PageRandom = (int) (Math.random() * 9) + 1;
+        }else if(tableName.equals(tableList[2])){
+            PageRandom = (int) (Math.random() * 200) + 1;
+        }else if(tableName.equals(tableList[3])){
+            PageRandom = (int) (Math.random() * 30) + 1;
+        }else if(tableName.equals(tableList[4])){
+            PageRandom = (int) (Math.random() * 14) + 1;
+        }else if(tableName.equals(tableList[5])){
+            PageRandom = (int) (Math.random() * 8) + 1;
+        }
+
 
         fetchDataFromApi(tableName, PageRandom, pagingUnit);
 

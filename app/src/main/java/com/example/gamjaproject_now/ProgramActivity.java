@@ -53,6 +53,7 @@ public class ProgramActivity extends AppCompatActivity {
     int index = 0;
     int All;
     Random rand;
+    int PageRandom;
 
 
     @Override
@@ -191,14 +192,21 @@ public class ProgramActivity extends AppCompatActivity {
             }
         });
 
+        //137, 224, 4816, 657, 305, 200;
+        if(tableName.equals(tableList[0])){
+            PageRandom = (int) (Math.random()*5) + 1;
+        }else if(tableName.equals(tableList[1])){
+            PageRandom = (int) (Math.random()*9) + 1;
+        }else if(tableName.equals(tableList[2])){
+            PageRandom = (int) (Math.random()*200) + 1;
+        }else if(tableName.equals(tableList[3])){
+            PageRandom = (int) (Math.random()*30) + 1;
+        }else if(tableName.equals(tableList[4])){
+            PageRandom = (int) (Math.random()*14) + 1;
+        }else if(tableName.equals(tableList[5])){
+            PageRandom = (int) (Math.random()*8) + 1;
+        }
 
-
-
-
-
-
-
-        int PageRandom = (int) (Math.random()*5) + 1;
 
         fetchDataFromApi(tableName, PageRandom, 10);
     }
@@ -237,7 +245,6 @@ public class ProgramActivity extends AppCompatActivity {
                 testArr[0].setOnClickListener(v -> {
                     if (result != null) {
                         startActivity(intent[0]);
-
                     }
                 });
                 testArr[1].setOnClickListener(v -> {
