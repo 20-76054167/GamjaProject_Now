@@ -131,7 +131,6 @@
 package com.example.gamjaproject_now;
 
 
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -182,15 +181,12 @@ public class MainActivity extends AppCompatActivity {
     int PageRandom;
 
 
-
-
-
     int pagingUnit = 21;
     ImageView[] iv_imagearr = new ImageView[21];
     TextView[] testArr = new TextView[21];
     Button[] buttonTag = new Button[3];
 
-//    private API data;
+    //    private API data;
     Intent[] intent = new Intent[pagingUnit];
 
 
@@ -201,9 +197,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Setup button click listeners
-        buttonTag[0] = (Button)findViewById(R.id.button_webtoon);
-        buttonTag[1] = (Button)findViewById(R.id.button_movie);
-        buttonTag[2] = (Button)findViewById(R.id.button_book);
+        buttonTag[0] = (Button) findViewById(R.id.button_webtoon);
+        buttonTag[1] = (Button) findViewById(R.id.button_movie);
+        buttonTag[2] = (Button) findViewById(R.id.button_book);
 
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
 //            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -275,8 +271,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentC = new Intent(MainActivity.this, CategoryActivity.class);
 
-               String buttonText = buttonTag[0].getText().toString();
-               intentC.putExtra("buttonText", buttonText);
+                String buttonText = buttonTag[0].getText().toString();
+                intentC.putExtra("buttonText", buttonText);
                 startActivity(intentC);
 
             }
@@ -312,34 +308,32 @@ public class MainActivity extends AppCompatActivity {
         buttonTag[2].setOnClickListener(buttonTagmove3);
 
 
-
-
-        Call<Count[]> callP = APIController.getCountCall(tableList[rand.nextInt(6)]);
-        callP.enqueue(new Callback<Count[]>() {
-            @Override
-            public void onResponse(Call<Count[]> call, Response<Count[]> response) {
-                    Count[] resultP = response.body();
-                    P = resultP[0].getCnt();
-            }
-
-            @Override
-            public void onFailure(Call<Count[]> call, Throwable t) {
-
-            }
-        });
+//        Call<Count[]> callP = APIController.getCountCall(tableList[rand.nextInt(6)]);
+//        callP.enqueue(new Callback<Count[]>() {
+//            @Override
+//            public void onResponse(Call<Count[]> call, Response<Count[]> response) {
+//                    resultP = response.body();
+//                    P = resultP[0].getCnt();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Count[]> call, Throwable t) {
+//
+//            }
+//        });
 //        137, 224, 4816, 657, 305, 200;
         String tableName = tableList[rand.nextInt(6)];
-        if(tableName.equals(tableList[0])) {
+        if (tableName.equals(tableList[0])) {
             PageRandom = (int) (Math.random() * 5) + 1;
-        }else if(tableName.equals(tableList[1])){
+        } else if (tableName.equals(tableList[1])) {
             PageRandom = (int) (Math.random() * 9) + 1;
-        }else if(tableName.equals(tableList[2])){
+        } else if (tableName.equals(tableList[2])) {
             PageRandom = (int) (Math.random() * 200) + 1;
-        }else if(tableName.equals(tableList[3])){
+        } else if (tableName.equals(tableList[3])) {
             PageRandom = (int) (Math.random() * 30) + 1;
-        }else if(tableName.equals(tableList[4])){
+        } else if (tableName.equals(tableList[4])) {
             PageRandom = (int) (Math.random() * 14) + 1;
-        }else if(tableName.equals(tableList[5])){
+        } else if (tableName.equals(tableList[5])) {
             PageRandom = (int) (Math.random() * 8) + 1;
         }
 
@@ -367,9 +361,6 @@ public class MainActivity extends AppCompatActivity {
 //            intentC.putExtra("buttonText", buttonTag[0].getText().toString());
 //            startActivity(intentC);
 //        });
-
-
-
 
 
 //        testArr[0].setOnClickListener(listener);
@@ -403,7 +394,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Content[]> call, Response<Content[]> response) {
                 if (response.isSuccessful()) {
                     result = response.body();
-                    for(All = 0; All<pagingUnit; All++) {
+                    for (All = 0; All < pagingUnit; All++) {
 //                        Log.d("img_link", "img_link : " + result[i].getImg());
                         testArr[All].append(result[All].getTitle());
                         new DownloadFilesTask().execute(result[All].getImg());
@@ -418,9 +409,10 @@ public class MainActivity extends AppCompatActivity {
                         intent[All].putExtra("actor", result[All].getActor());
                     }
 
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, "API call failed", Toast.LENGTH_SHORT).show();
                 }
+
 
                 testArr[0].setOnClickListener(v -> {
                     if (result != null) {
@@ -522,8 +514,8 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent[19]);
                     }
                 });
-                testArr[20].setOnClickListener(v ->{
-                    if (result != null){
+                testArr[20].setOnClickListener(v -> {
+                    if (result != null) {
                         startActivity(intent[20]);
                     }
                 });
@@ -532,6 +524,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent[0]);
                     }
                 });
+
                 iv_imagearr[1].setOnClickListener(v -> {
                     if (result != null) {
                         startActivity(intent[1]);
@@ -627,8 +620,8 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent[19]);
                     }
                 });
-                iv_imagearr[20].setOnClickListener(v ->{
-                    if (result != null){
+                iv_imagearr[20].setOnClickListener(v -> {
+                    if (result != null) {
                         startActivity(intent[20]);
                     }
                 });
@@ -648,18 +641,18 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Bitmap doInBackground(String... strings) {
             Bitmap bmp = null;
-                try {
-                    String img_url = strings[0];
-                    URL url = new URL(img_url);
-                    bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                } catch (MalformedURLException e) {
-                    Log.e("DownloadFilesTask", "MalformedURLException: " + e.getMessage());
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    Log.e("DownloadFilesTask", "IOException: " + e.getMessage());
-                    e.printStackTrace();
-                }
-                return bmp;
+            try {
+                String img_url = strings[0];
+                URL url = new URL(img_url);
+                bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            } catch (MalformedURLException e) {
+                Log.e("DownloadFilesTask", "MalformedURLException: " + e.getMessage());
+                e.printStackTrace();
+            } catch (IOException e) {
+                Log.e("DownloadFilesTask", "IOException: " + e.getMessage());
+                e.printStackTrace();
+            }
+            return bmp;
         }
 
 
@@ -674,7 +667,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-
 
 
     }

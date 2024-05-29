@@ -51,8 +51,6 @@ public class CategoryActivity extends AppCompatActivity {
     Random randT = new Random();
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +65,6 @@ public class CategoryActivity extends AppCompatActivity {
         String message = intent.getStringExtra("buttonText");
         TextView category = (TextView) findViewById(R.id.categoryText);
         category.setText(message);
-
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -129,45 +126,42 @@ public class CategoryActivity extends AppCompatActivity {
         };
 
 
-        Call<Count[]> countCall = APIController.getCountCall("kakaowebtoon");
-        countCall.enqueue(new Callback<Count[]>() {
-            @Override
-            public void onResponse(Call<Count[]> call, Response<Count[]> response) {
-                Count[] result = response.body();
-                Log.d("Count", "Count : " + result[0].getCnt());
-//                b = result[0].getCnt();
-            }
+//        Call<Count[]> countCall = APIController.getCountCall("kakaowebtoon");
+//        countCall.enqueue(new Callback<Count[]>() {
+//            @Override
+//            public void onResponse(Call<Count[]> call, Response<Count[]> response) {
+//                Count[] result = response.body();
+//                Log.d("Count", "Count : " + result[0].getCnt());
+////                b = result[0].getCnt();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Count[]> call, Throwable t) {
+//                Log.d("결과", "실패 : " + t.getMessage());
+//
+//            }
+//        });
 
-            @Override
-            public void onFailure(Call<Count[]> call, Throwable t) {
-                Log.d("결과", "실패 : " + t.getMessage());
 
-            }
-        });
-
-
-
-        if((message.equals(BW))) { //9, 30
-            if(CategoryRandomTableWebtoon.equals(WebtooontableList[0])) {
+        if ((message.equals(BW))) { //9, 30
+            if (CategoryRandomTableWebtoon.equals(WebtooontableList[0])) {
                 fetchDataFromApi(CategoryRandomTableWebtoon, (int) (Math.random() * 9) + 1, 21);
-            }else if(CategoryRandomTableWebtoon.equals(WebtooontableList[1])){
+            } else if (CategoryRandomTableWebtoon.equals(WebtooontableList[1])) {
                 fetchDataFromApi(CategoryRandomTableWebtoon, (int) (Math.random() * 30) + 1, 21);
             }
-        }else if((message.equals(BN))){ //200
-            if(CategoryRandomTableNovel.equals(NoveltableList[0])) {
+        } else if ((message.equals(BN))) { //200
+            if (CategoryRandomTableNovel.equals(NoveltableList[0])) {
                 fetchDataFromApi(CategoryRandomTableNovel, (int) (Math.random() * 200) + 1, 21);
             }
-        }else{ // 5, 14, 8
-            if(CategoryRandomTableMovie.equals(MovietableList[0])) {
+        } else { // 5, 14, 8
+            if (CategoryRandomTableMovie.equals(MovietableList[0])) {
                 fetchDataFromApi(CategoryRandomTableMovie, (int) (Math.random() * 5) + 1, 21);
-            }else if(CategoryRandomTableMovie.equals(MovietableList[1])) {
+            } else if (CategoryRandomTableMovie.equals(MovietableList[1])) {
                 fetchDataFromApi(CategoryRandomTableMovie, (int) (Math.random() * 14) + 1, 21);
-            }else if(CategoryRandomTableMovie.equals(MovietableList[2])){
+            } else if (CategoryRandomTableMovie.equals(MovietableList[2])) {
                 fetchDataFromApi(CategoryRandomTableMovie, (int) (Math.random() * 8) + 1, 21);
             }
         }
-
-
 
 
 //        testarr[0].setOnClickListener(listener);
@@ -195,15 +189,17 @@ public class CategoryActivity extends AppCompatActivity {
 
 
     }
+
     private void fetchDataFromApi(String tableList, int page, int pagingUnit) {
         Call<Content[]> call = APIController.getTestCall(tableList, page, pagingUnit);
         call.enqueue(new Callback<Content[]>() {
             Intent[] intent = new Intent[pagingUnit];
+
             @Override
             public void onResponse(Call<Content[]> call, Response<Content[]> response) {
                 if (response.isSuccessful()) {
                     result = response.body();
-                    for(All = 0; All<pagingUnit; All++) {
+                    for (All = 0; All < pagingUnit; All++) {
 //                        Log.d("img_link", "img_link : " + result[i].getImg());
 
                         testArr[All].append(result[All].getTitle());
@@ -220,7 +216,7 @@ public class CategoryActivity extends AppCompatActivity {
 
                     }
 
-                }else{
+                } else {
                     Toast.makeText(CategoryActivity.this, "API call failed", Toast.LENGTH_SHORT).show();
                 }
 
@@ -325,8 +321,8 @@ public class CategoryActivity extends AppCompatActivity {
                         startActivity(intent[19]);
                     }
                 });
-                testArr[20].setOnClickListener(v ->{
-                    if (result != null){
+                testArr[20].setOnClickListener(v -> {
+                    if (result != null) {
                         startActivity(intent[20]);
                     }
                 });
@@ -335,6 +331,7 @@ public class CategoryActivity extends AppCompatActivity {
                         startActivity(intent[0]);
                     }
                 });
+
                 iv_imagearr[1].setOnClickListener(v -> {
                     if (result != null) {
                         startActivity(intent[1]);
@@ -430,8 +427,8 @@ public class CategoryActivity extends AppCompatActivity {
                         startActivity(intent[19]);
                     }
                 });
-                iv_imagearr[20].setOnClickListener(v ->{
-                    if (result != null){
+                iv_imagearr[20].setOnClickListener(v -> {
+                    if (result != null) {
                         startActivity(intent[20]);
                     }
                 });
@@ -446,7 +443,6 @@ public class CategoryActivity extends AppCompatActivity {
 
 
     }
-
 
 
     private class DownloadFilesTask extends AsyncTask<String, Void, Bitmap> {
