@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,6 +69,8 @@ public class ProgramActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        ImageView LOGO = (ImageView) findViewById(R.id.logo);
+
 
         String title = intent.getStringExtra("title");
         String director = intent.getStringExtra("director");
@@ -98,26 +101,16 @@ public class ProgramActivity extends AppCompatActivity {
 
         Log.d("genretableName", genretableN != null ? genretableN : "DefaultMessage");
 
+        View.OnClickListener reroll = new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentR = new Intent(ProgramActivity.this, MainActivity.class);
+                startActivity(intentR);
+                finish();
+            }
+        };
 
-//        Log.d("tablename", tableName);
 
-//        Call<ContentGenre[]> call13 = APIController.getGenreCall(tableName, id);
-//        call13.enqueue(new Callback<ContentGenre[]>() {
-//            @Override
-//            public void onResponse(Call<ContentGenre[]> call13, Response<ContentGenre[]> response) {
-//                if(response.isSuccessful()){
-//                    ContentGenre[] result = response.body();
-//
-//                    Log.d("responseSuccess", result.toString());
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ContentGenre[]> call13, Throwable t) {
-//                Log.d("responseFail", t.getMessage());
-//            }
-//        });
+        LOGO.setOnClickListener(reroll);
 
 
         programV = (ImageView) findViewById(R.id.programView);
@@ -127,32 +120,34 @@ public class ProgramActivity extends AppCompatActivity {
         programNA.setText(title);
         programDi.setText(director);
         programSU.setText(description);
+        new DownloadFilesTaskP().execute(image);
 
-        Thread imgThread = new Thread() {
-            public void run() {
-                try {
-                    URL url = new URL(image);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setDoInput(true);
-                    conn.connect();
 
-                    InputStream is = conn.getInputStream();
-                    bitmap = BitmapFactory.decodeStream(is);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        imgThread.start();
+//        Thread imgThread = new Thread() {
+//            public void run() {
+//                try {
+//                    URL url = new URL(image);
+//                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//                    conn.setDoInput(true);
+//                    conn.connect();
+//                    InputStream is = conn.getInputStream();
+//                    bitmap = BitmapFactory.decodeStream(is);
+//                } catch (MalformedURLException e) {
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        };
+//        imgThread.start();
+//
+//        try {
+//            imgThread.join();
+//            programV.setImageBitmap(bitmap);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
-        try {
-            imgThread.join();
-            programV.setImageBitmap(bitmap);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         testArr[0] = (TextView) findViewById(R.id.test);
         testArr[1] = (TextView) findViewById(R.id.test2);
@@ -177,53 +172,10 @@ public class ProgramActivity extends AppCompatActivity {
         iv_imagearr[9] = (ImageView) findViewById(R.id.imageView10);
 
 
-//        Call<ContentGenre[]> genrecall = APIController.getGenreCall(genretableN, id);
-//
-//        genrecall.enqueue(new Callback<ContentGenre[]>() {
-//            @Override
-//            public void onResponse(Call<ContentGenre[]> genrecall, Response<ContentGenre[]> response) {
-//                if (response.isSuccessful()) {
-//                    ContentGenre[] resultGenre = response.body();
-//                    Gid = resultGenre[0].getGenre_id();
-//                    Log.d("genre_id", String.valueOf(Gid));
-//                    fetchGenreDataFromApi(tableName, Gid, 10);
-//
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ContentGenre[]> call, Throwable t) {
-//
-//            }
-//        });
-
-
-
-
         fetchGidAndProceed(tableName, id);
         Log.d("genre__id", String.valueOf(Gid));
 
 //        137, 224, 4816, 657, 305, 200;
-//        if (tableName.equals(tableList[0])) {
-//            PageRandom = (int) (Math.random() * 5) + 1;
-//        } else if (tableName.equals(tableList[1])) {
-//            PageRandom = (int) (Math.random() * 9) + 1;
-//        } else if (tableName.equals(tableList[2])) {
-//            PageRandom = (int) (Math.random() * 200) + 1;
-//        } else if (tableName.equals(tableList[3])) {
-//            PageRandom = (int) (Math.random() * 30) + 1;
-//        } else if (tableName.equals(tableList[4])) {
-//            PageRandom = (int) (Math.random() * 14) + 1;
-//        } else if (tableName.equals(tableList[5])) {
-//            PageRandom = (int) (Math.random() * 8) + 1;
-//        }
-
-
-
-//        fetchGenreDataFromApi(tableName, Gid, 10);
-//        fetchGenreDataFromApi(tableList[rand.nextInt(6)], Gid, 10);
-//        fetchDataFromApi(tableName, PageRandom, 10);
 
     }
 
@@ -238,10 +190,8 @@ public class ProgramActivity extends AppCompatActivity {
                     Gid = resultGenre[0].getGenre_id();
                     Log.d("genre_id", String.valueOf(Gid));
                     fetchGenreDataFromApi(tableName, Gid, 10);
-
                 }
             }
-
             @Override
             public void onFailure(Call<ContentGenre[]> call, Throwable t) {
                 Log.e("API Call Failure", t.getMessage());
@@ -249,37 +199,18 @@ public class ProgramActivity extends AppCompatActivity {
         });
     }
 
-    private void fetchDataAfterGid(String tableName, int Gid, int pagingUnit) {
-        // PageRandom 설정 로직
-//        if (tableName.equals(tableList[0])) {
-//            PageRandom = (int) (Math.random() *5) + 1;
-//        } else if (tableName.equals(tableList[1])) {
-//            PageRandom = (int) (Math.random() * 9) + 1;
-//        } else if (tableName.equals(tableList[2])) {
-//            PageRandom = (int) (Math.random() * 200) + 1;
-//        } else if (tableName.equals(tableList[3])) {
-//            PageRandom = (int) (Math.random() * 30) + 1;
-//        } else if (tableName.equals(tableList[4])) {
-//            PageRandom = (int) (Math.random() * 14) + 1;
-//        } else if (tableName.equals(tableList[5])) {
-//            PageRandom = (int) (Math.random() * 8) + 1;
-//        }
 
-        fetchGenreDataFromApi(tableName, Gid, pagingUnit);
-        // fetchDataFromApi(tableName, PageRandom, 10);
-    }
     private void fetchGenreDataFromApi(String tableName, int Gid, int pagingUnit) {
         Call<Content[]> genreTestcall = APIController.getGenreTestCall(tableName, Gid);
         genreTestcall.enqueue(new Callback<Content[]>() {
             Intent[] intent = new Intent[pagingUnit];
-
             @Override
             public void onResponse(Call<Content[]> genreTestcall, Response<Content[]> response) {
                 if (response.isSuccessful()) {
                     resultG = response.body();
 
                     ArrayList<Integer> indices = new ArrayList<>();
-                    for(int i = 0; i<resultG.length; i++){
+                    for (int i = 0; i < resultG.length; i++) {
                         indices.add(i);
                     }
                     Collections.shuffle(indices);
@@ -289,7 +220,7 @@ public class ProgramActivity extends AppCompatActivity {
                         testArr[i].append(resultG[index].getTitle());
                         Log.d("genretitles", "genretitles :  " + resultG[index].getTitle());
                         Log.d("genreimg", "genreimage:" + resultG[index].getImg());
-                        new ProgramActivity.DownloadFilesTask().execute(resultG[index].getImg());
+                        new ProgramActivity.DownloadFilesTask(i).execute(resultG[index].getImg());
 
                         intent[i] = new Intent(ProgramActivity.this, ProgramActivity.class);
                         intent[i].putExtra("tableName", tableName);
@@ -324,8 +255,8 @@ public class ProgramActivity extends AppCompatActivity {
 //                    finish();
                 });
             }
-            if(iv_imagearr[index] != null){
-                iv_imagearr[index].setOnClickListener( v->{
+            if (iv_imagearr[index] != null) {
+                iv_imagearr[index].setOnClickListener(v -> {
                     startActivity(intent[index]);
 //                    finish();
                 });
@@ -335,307 +266,64 @@ public class ProgramActivity extends AppCompatActivity {
 
 
 
-
-//    private void fetchDataFromApi(String tableList, int page, int pagingUnit) {
-//        Call<Content[]> call = APIController.getTestCall(tableList, page, pagingUnit);
-//        call.enqueue(new Callback<Content[]>() {
-//            Intent[] intent = new Intent[pagingUnit];
-//
-//            @Override
-//            public void onResponse(Call<Content[]> call, Response<Content[]> response) {
-//                if (response.isSuccessful()) {
-//                    result = response.body();
-//                    for (All = 0; All < pagingUnit; All++) {
-////                        Log.d("img_link", "img_link : " + result[i].getImg());
-//                        testArr[All].append(result[All].getTitle());
-//                        new ProgramActivity.DownloadFilesTask().execute(result[All].getImg());
-//
-//                        intent[All] = new Intent(ProgramActivity.this, ProgramActivity.class);
-//                        intent[All].putExtra("tableName", tableList);
-//                        intent[All].putExtra("title", result[All].getTitle());
-//                        intent[All].putExtra("director", result[All].getDirector());
-//                        intent[All].putExtra("description", result[All].getDescription());
-//                        intent[All].putExtra("image", result[All].getImg());
-//                        intent[All].putExtra("id", result[All].getId());
-//                        intent[All].putExtra("actor", result[All].getActor());
-//
-//
-//                    }
-//
-//                } else {
-//                    Toast.makeText(ProgramActivity.this, "API call failed", Toast.LENGTH_SHORT).show();
-//                }
-//
-//
-//                testArr[0].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[0]);
-//                    }
-//                });
-//                testArr[1].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[1]);
-//                    }
-//                });
-//                testArr[2].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[2]);
-//                    }
-//                });
-//                testArr[3].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[3]);
-//                    }
-//                });
-//                testArr[4].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[4]);
-//                    }
-//                });
-//                testArr[5].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[5]);
-//                    }
-//                });
-//                testArr[6].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[6]);
-//                    }
-//                });
-//                testArr[7].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[7]);
-//                    }
-//                });
-//                testArr[8].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[8]);
-//                    }
-//                });
-//                testArr[9].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[9]);
-//                    }
-//                });
-//                iv_imagearr[0].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[0]);
-//                    }
-//                });
-//                iv_imagearr[1].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[1]);
-//                    }
-//                });
-//
-//                iv_imagearr[2].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[2]);
-//                    }
-//                });
-//                iv_imagearr[3].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[3]);
-//                    }
-//                });
-//                iv_imagearr[4].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[4]);
-//                    }
-//                });
-//                iv_imagearr[5].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[5]);
-//                    }
-//                });
-//                iv_imagearr[6].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[6]);
-//                    }
-//                });
-//                iv_imagearr[7].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[7]);
-//                    }
-//                });
-//                iv_imagearr[8].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[8]);
-//                    }
-//                });
-//                iv_imagearr[9].setOnClickListener(v -> {
-//                    if (result != null) {
-//                        startActivity(intent[9]);
-//                    }
-//                });
-//                index = 0;
+    //    private class DownloadFilesTask extends AsyncTask<String, Void, Bitmap> {
+//        @Override
+//        protected Bitmap doInBackground(String... strings) {
+//            Bitmap bmp = null;
+//            try {
+//                String img_url = strings[0];
+//                URL url = new URL(img_url);
+//                bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//            } catch (MalformedURLException e) {
+//                Log.e("DownloadFilesTask", "MalformedURLException: " + e.getMessage());
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                Log.e("DownloadFilesTask", "IOException: " + e.getMessage());
+//                e.printStackTrace();
 //            }
-//
-//            @Override
-//            public void onFailure(Call<Content[]> call, Throwable t) {
-//                Log.d("결과", "실패 : " + t.getMessage());
-//            }
-//        });
-//    }
-//
-//    private void fetchGenreDataFromApi(String tableName, int Gid, int pagingUnit) {
-//        Call<Content[]> genreTestcall = APIController.getGenreTestCall(tableName, Gid);
-//        genreTestcall.enqueue(new Callback<Content[]>() {
-//            Intent[] intent = new Intent[pagingUnit];
-//
-//            @Override
-//            public void onResponse(Call<Content[]> genreTestcall, Response<Content[]> response) {
-//                if (response.isSuccessful()) {
-//                    resultG = response.body();
-//                    for (int i = 0; i < Math.min(pagingUnit, resultG.length); i++) {
-//
-//                        testArr[i].append(resultG[i].getTitle());
-//                        Log.d("genretitles", "genretitles :  " + resultG[i].getTitle());
-//                        Log.d("genreimg", "genreimage:" + resultG[i].getImg());
-//                        new ProgramActivity.DownloadFilesTask().execute(resultG[i].getImg());
-//
-//                        intent[i] = new Intent(ProgramActivity.this, ProgramActivity.class);
-//                        intent[i].putExtra("tableName", tableList);
-//                        intent[i].putExtra("title", resultG[i].getTitle());
-//                        intent[i].putExtra("director", resultG[i].getDirector());
-//                        intent[i].putExtra("description", resultG[i].getDescription());
-//                        intent[i].putExtra("image", resultG[i].getImg());
-//                        intent[i].putExtra("id", resultG[i].getId());
-//                        intent[i].putExtra("actor", resultG[i].getActor());
-//
-//
-//                    }
-//
-//                } else {
-//                    Toast.makeText(ProgramActivity.this, "API call failed", Toast.LENGTH_SHORT).show();
-//                }
-//
-//
-//                testArr[0].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[0]);
-//                    }
-//                });
-//                testArr[1].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[1]);
-//                    }
-//                });
-//                testArr[2].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[2]);
-//                    }
-//                });
-//                testArr[3].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[3]);
-//                    }
-//                });
-//                testArr[4].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[4]);
-//                    }
-//                });
-//                testArr[5].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[5]);
-//                    }
-//                });
-//                testArr[6].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[6]);
-//                    }
-//                });
-//                testArr[7].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[7]);
-//                    }
-//                });
-//                testArr[8].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[8]);
-//                    }
-//                });
-//                testArr[9].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[9]);
-//                    }
-//                });
-//                iv_imagearr[0].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[0]);
-//                    }
-//                });
-//
-//                iv_imagearr[1].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[1]);
-//                    }
-//                });
-//                iv_imagearr[2].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[2]);
-//                    }
-//                });
-//                iv_imagearr[3].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[3]);
-//                    }
-//                });
-//                iv_imagearr[4].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[4]);
-//                    }
-//                });
-//                iv_imagearr[5].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[5]);
-//                    }
-//                });
-//                iv_imagearr[6].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[6]);
-//                    }
-//                });
-//                iv_imagearr[7].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[7]);
-//                    }
-//                });
-//                iv_imagearr[8].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[8]);
-//                    }
-//                });
-//                iv_imagearr[9].setOnClickListener(v -> {
-//                    if (resultG != null) {
-//                        startActivity(intent[9]);
-//                    }
-//                });
-//                index = 0;
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Content[]> genreTestcall, Throwable t) {
-//                Log.d("결과", "실패 : " + t.getMessage());
-//            }
-//        });
-//    }
-
+//            return bmp;
+//        }
     private class DownloadFilesTask extends AsyncTask<String, Void, Bitmap> {
+        private int index;
+        public DownloadFilesTask(int index) {
+            this.index = index;
+        }
+
         @Override
         protected Bitmap doInBackground(String... strings) {
             Bitmap bmp = null;
+            InputStream inputStream = null;//추가사항
+            HttpURLConnection connection = null;//추가사항
             try {
                 String img_url = strings[0];
                 URL url = new URL(img_url);
-                bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                connection = (HttpURLConnection) url.openConnection();//추가사항
+                connection.setConnectTimeout(10000); // 10초 타임아웃 추가사항
+                connection.setReadTimeout(15000);    // 15초 타임아웃 추가사항
+                connection.setRequestProperty("User-Agent", "Mozilla/5.0"); // User-Agent 설정
+                int responseCode = connection.getResponseCode();//추가사항
+
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = connection.getInputStream();
+                    bmp = BitmapFactory.decodeStream(inputStream);
+//                    bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream()); //이거 남겨 이게 원본
+                } else {
+                    Log.e("DownloadFilesTask", "서버 응답 오류: " + responseCode + " URL: " + img_url);
+                }
             } catch (MalformedURLException e) {
                 Log.e("DownloadFilesTask", "MalformedURLException: " + e.getMessage());
                 e.printStackTrace();
             } catch (IOException e) {
                 Log.e("DownloadFilesTask", "IOException: " + e.getMessage());
                 e.printStackTrace();
+            } finally {
+                if (inputStream != null) {
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
             return bmp;
         }
@@ -645,6 +333,61 @@ public class ProgramActivity extends AppCompatActivity {
             if (resultG != null) {
                 iv_imagearr[index].setImageBitmap(resultG);
                 index++;
+            } else {
+                Log.e("DownloadFilesTask", "Bitmap is null");
+            }
+        }
+    }
+
+    private class DownloadFilesTaskP extends AsyncTask<String, Void, Bitmap> {
+        private int index;
+        public DownloadFilesTaskP() {
+            this.index = index;
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+            Bitmap bmp = null;
+            InputStream inputStream = null;//추가사항
+            HttpURLConnection connection = null;//추가사항
+            try {
+                String img_url = strings[0];
+                URL url = new URL(img_url);
+                connection = (HttpURLConnection) url.openConnection();//추가사항
+                connection.setConnectTimeout(10000); // 10초 타임아웃 추가사항
+                connection.setReadTimeout(15000);    // 15초 타임아웃 추가사항
+                connection.setRequestProperty("User-Agent", "Mozilla/5.0"); // User-Agent 설정
+                int responseCode = connection.getResponseCode();//추가사항
+
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = connection.getInputStream();
+                    bmp = BitmapFactory.decodeStream(inputStream);
+//                    bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream()); //이거 남겨 이게 원본
+                } else {
+                    Log.e("DownloadFilesTask", "서버 응답 오류: " + responseCode + " URL: " + img_url);
+                }
+            } catch (MalformedURLException e) {
+                Log.e("DownloadFilesTask", "MalformedURLException: " + e.getMessage());
+                e.printStackTrace();
+            } catch (IOException e) {
+                Log.e("DownloadFilesTask", "IOException: " + e.getMessage());
+                e.printStackTrace();
+            } finally {
+                if (inputStream != null) {
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return bmp;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            if (result != null) {
+                programV.setImageBitmap(result);
             } else {
                 Log.e("DownloadFilesTask", "Bitmap is null");
             }

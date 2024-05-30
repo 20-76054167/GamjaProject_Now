@@ -22,6 +22,8 @@ import com.example.gamjaproject_now.API.APIController;
 import com.example.gamjaproject_now.API.Count;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
@@ -74,6 +76,7 @@ public class CategoryActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        ImageView LOGO = (ImageView) findViewById(R.id.logo);
 
         testArr[0] = (TextView) findViewById(R.id.test);
         testArr[1] = (TextView) findViewById(R.id.test2);
@@ -127,22 +130,16 @@ public class CategoryActivity extends AppCompatActivity {
             }
         };
 
+        View.OnClickListener reroll = new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intentR = new Intent(CategoryActivity.this, MainActivity.class);
+                startActivity(intentR);
+                finish();
+            }
+        };
 
-//        Call<Count[]> countCall = APIController.getCountCall("kakaowebtoon");
-//        countCall.enqueue(new Callback<Count[]>() {
-//            @Override
-//            public void onResponse(Call<Count[]> call, Response<Count[]> response) {
-//                Count[] result = response.body();
-//                Log.d("Count", "Count : " + result[0].getCnt());
-////                b = result[0].getCnt();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Count[]> call, Throwable t) {
-//                Log.d("결과", "실패 : " + t.getMessage());
-//
-//            }
-//        });
+
+        LOGO.setOnClickListener(reroll);
 
 
         if ((message.equals(BW))) { //9, 30
@@ -611,25 +608,44 @@ public class CategoryActivity extends AppCompatActivity {
 
     private class DownloadFilesTask extends AsyncTask<String, Void, Bitmap> {
         private int index;
-
         public DownloadFilesTask(int index) {
             this.index = index;
         }
         @Override
         protected Bitmap doInBackground(String... strings) {
-            Log.d("String", Arrays.toString(strings));
             Bitmap bmp = null;
+            InputStream inputStream = null;//추가사항
+            HttpURLConnection connection = null;//추가사항
             try {
                 String img_url = strings[0];
                 URL url = new URL(img_url);
-                Log.d("url", url.toString());
-                bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                connection = (HttpURLConnection) url.openConnection();//추가사항
+                connection.setConnectTimeout(10000); // 10초 타임아웃 추가사항
+                connection.setReadTimeout(15000);    // 15초 타임아웃 추가사항
+                connection.setRequestProperty("User-Agent", "Mozilla/5.0"); // User-Agent 설정
+                int responseCode = connection.getResponseCode();//추가사항
+
+                if(responseCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = connection.getInputStream();
+                    bmp = BitmapFactory.decodeStream(inputStream);
+//                    bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream()); //이거 남겨 이게 원본
+                }else{
+                    Log.e("DownloadFilesTask", "서버 응답 오류: " + responseCode + " URL: " + img_url);
+                }
             } catch (MalformedURLException e) {
                 Log.e("DownloadFilesTask", "MalformedURLException: " + e.getMessage());
                 e.printStackTrace();
             } catch (IOException e) {
                 Log.e("DownloadFilesTask", "IOException: " + e.getMessage());
                 e.printStackTrace();
+            }finally{
+                if(inputStream != null){
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
             return bmp;
         }
