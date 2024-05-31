@@ -24,6 +24,12 @@
             android:layout_height="80dp"
             android:layout_centerInParent="true"
             android:src="@drawable/now_logo" />
+        <ImageView
+            android:id="@+id/dice"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_launcher_foreground"/>
     </RelativeLayout>
 
     <!-- Content Area with ScrollView -->

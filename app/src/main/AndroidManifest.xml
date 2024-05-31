@@ -31,6 +31,8 @@
         <activity android:name=".ProgramActivity"
             android:exported="true"
             />
+        <activity android:name=".RandomActivity"
+            android:exported="true"/>
 
 
     </application>

@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,27 +36,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RandomActivity extends AppCompatActivity {
-
-
-    ImageView[] programV;
-    TextView[] programNA;
-
-    TextView[] programDi;
-
-    TextView[] programSU;
+    ImageView programV;
+    TextView programNA;
+    TextView programDi;
+    TextView programSU;
     String[] tableList = {"couplay", "kakaowebtoon", "kpnovel", "naverwebtoon", "netflix", "watcha"};
     String[] GenretableList = {"couplay_genre", "kakaowebtoon_genre", "kpnovel_genre", "naverwebtoon_genre", "netflix_genre", "watcha_genre"};
-
-    private Content[] resultG;
-
+    String tableName;
     private Content[] result;
-
-    String genretableN;
-    int Gid;
-    int GC;
-    Bitmap bitmap;
-    int index = 0;
-    int All;
     Random rand;
     int PageRandom;
 
@@ -66,26 +54,32 @@ public class RandomActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_random);
 
+        ImageView DICE = (ImageView) findViewById(R.id.dice);
+
+        View.OnClickListener dice = new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intentRR = new Intent(RandomActivity.this, RandomActivity.class);
+                startActivity(intentRR);
+                finish();
+            }
+        };
+        DICE.setOnClickListener(dice);
 
 
-        programV[0] = (ImageView) findViewById(R.id.randomprogramView);
-        programNA[0] = (TextView) findViewById(R.id.randomprogramname);
-        programSU[0] = (TextView) findViewById(R.id.randomprogramsummary);
-        programDi[0] = (TextView) findViewById(R.id.randomprogramdirector);
+
+        programV = (ImageView) findViewById(R.id.randomprogramView);
+        programNA = (TextView) findViewById(R.id.randomprogramname);
+        programSU = (TextView) findViewById(R.id.randomprogramsummary);
+        programDi = (TextView) findViewById(R.id.randomprogramdirector);
+        rand = new Random();
 
         fetchDataFromApi();
 
-
-
-
 //        137, 224, 4816, 657, 305, 200;
-
-
-
     }
 
     private void fetchDataFromApi() {
-            String tableName = tableList[rand.nextInt(tableList.length)];
+            tableName = tableList[rand.nextInt(tableList.length)];
             if (tableName.equals(tableList[0])) {
                 PageRandom = (int) (Math.random() * 137) + 1;
             } else if (tableName.equals(tableList[1])) {
@@ -106,9 +100,9 @@ public class RandomActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         result = response.body();
                         if(result != null) {
-                            programNA[0].setText(result[0].getTitle());
-                            programDi[0].setText(result[0].getDirector());
-                            programSU[0].setText(result[0].getDescription());
+                            programNA.setText(result[0].getTitle());
+                            programDi.setText(result[0].getDirector());
+                            programSU.setText(result[0].getDescription());
                             new RandomActivity.DownloadFilesTask().execute(result[0].getImg());
                         }
 
@@ -130,27 +124,53 @@ public class RandomActivity extends AppCompatActivity {
 
 
     private class DownloadFilesTask extends AsyncTask<String, Void, Bitmap> {
+        private int index;
+        public DownloadFilesTask() {
+            this.index = index;
+        }
         @Override
         protected Bitmap doInBackground(String... strings) {
             Bitmap bmp = null;
+            InputStream inputStream = null;//추가사항
+            HttpURLConnection connection = null;//추가사항
             try {
                 String img_url = strings[0];
                 URL url = new URL(img_url);
-                bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                connection = (HttpURLConnection) url.openConnection();//추가사항
+                connection.setConnectTimeout(10000); // 10초 타임아웃 추가사항
+                connection.setReadTimeout(15000);    // 15초 타임아웃 추가사항
+                connection.setRequestProperty("User-Agent", "Mozilla/5.0"); // User-Agent 설정
+                int responseCode = connection.getResponseCode();//추가사항
+
+                if(responseCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = connection.getInputStream();
+                    bmp = BitmapFactory.decodeStream(inputStream);
+//                    bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream()); //이거 남겨 이게 원본
+                }else{
+                    Log.e("DownloadFilesTask", "서버 응답 오류: " + responseCode + " URL: " + img_url);
+                }
             } catch (MalformedURLException e) {
                 Log.e("DownloadFilesTask", "MalformedURLException: " + e.getMessage());
                 e.printStackTrace();
             } catch (IOException e) {
                 Log.e("DownloadFilesTask", "IOException: " + e.getMessage());
                 e.printStackTrace();
+            }finally{
+                if(inputStream != null){
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
             return bmp;
         }
 
         @Override
         protected void onPostExecute(Bitmap result) {
-            if (resultG != null) {
-                programV[0].setImageBitmap(result);
+            if (result != null) {
+                programV.setImageBitmap(result);
             } else {
                 Log.e("DownloadFilesTask", "Bitmap is null");
             }

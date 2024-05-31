@@ -22,6 +22,12 @@
             android:layout_height="80dp"
             android:layout_centerInParent="true"
             android:src="@drawable/now_logo" />
+        <ImageView
+            android:id="@+id/dice"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_launcher_foreground"/>
     </RelativeLayout>
 
 
@@ -44,18 +50,27 @@
         android:layout_marginStart="44dp"
         android:layout_marginTop="427dp"
         android:text="제작진:"
-        android:textSize="18dp" />
+        android:textSize="18dp"
+        android:textAlignment="center"/>
 
-    <TextView
-        android:id="@+id/randomprogramsummary"
-        android:layout_width="366dp"
-        android:layout_height="153dp"
+
+    <ScrollView
+        android:layout_width="352dp"
+        android:layout_height="149dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="485dp"
-        android:text="줄거리:"
-        android:textSize="14dp" />
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="491dp"
+        android:fillViewport="true">
+
+        <TextView
+            android:id="@+id/randomprogramsummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="100"
+            android:text="줄거리:"
+            android:textSize="14dp" />
+    </ScrollView>
 
     <TextView
         android:id="@+id/randomprogramname"
@@ -67,7 +82,8 @@
         android:layout_marginTop="111dp"
         android:text="제목:"
         android:textSize="24dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textAlignment="center"/>
 
 
 </RelativeLayout>

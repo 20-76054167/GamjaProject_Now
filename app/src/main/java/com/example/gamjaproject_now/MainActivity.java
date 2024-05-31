@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        ImageView DICE = (ImageView) findViewById(R.id.dice);
         ImageView LOGO = (ImageView) findViewById(R.id.logo);
         // Setup button click listeners
         buttonTag[0] = (Button) findViewById(R.id.button_webtoon);
@@ -124,6 +125,13 @@ public class MainActivity extends AppCompatActivity {
         iv_imagearr[20] = (ImageView) findViewById(R.id.imageView21);
 
 
+        View.OnClickListener dice = new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intentD = new Intent(MainActivity.this, RandomActivity.class);
+                startActivity(intentD);
+            }
+        };
+
         View.OnClickListener reroll = new View.OnClickListener(){
             public void onClick(View v){
                 Intent intentR = new Intent(MainActivity.this, MainActivity.class);
@@ -158,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intentC);
             }
         };
+        DICE.setOnClickListener(dice);
         LOGO.setOnClickListener(reroll);
 
         buttonTag[0].setOnClickListener(buttonTagmove);
@@ -209,6 +218,7 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra("description", content.getDescription());
                             intent.putExtra("image", content.getImg());
                             intent.putExtra("actor", content.getActor());
+                            intent.putExtra("url", content.getUrl());
 
                             testArr[CurrentIndex].setOnClickListener(v ->
                                     startActivity(intent));

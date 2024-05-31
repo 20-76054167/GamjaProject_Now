@@ -322,6 +322,7 @@ public class CategoryActivity extends AppCompatActivity {
                             intent.putExtra("description", content.getDescription());
                             intent.putExtra("image", content.getImg());
                             intent.putExtra("actor", content.getActor());
+                            intent.putExtra("url", content.getUrl());
 
                             testArr[CurrentIndex].setOnClickListener(v ->
                                     startActivity(intent));
