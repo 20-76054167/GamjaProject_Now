@@ -220,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra("actor", content.getActor());
                             intent.putExtra("url", content.getUrl());
 
+
                             testArr[CurrentIndex].setOnClickListener(v ->
                                     startActivity(intent));
                             iv_imagearr[CurrentIndex].setOnClickListener(v ->

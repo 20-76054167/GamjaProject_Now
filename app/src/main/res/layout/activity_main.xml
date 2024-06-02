@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@drawable/now_background03"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/now_background03"
     tools:context=".MainActivity">
 
     <!-- Top Bar -->
@@ -14,8 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#00000000"
-        android:padding="16dp"
-        android:elevation="4dp">
+        android:elevation="4dp"
+        android:padding="16dp">
 
         <!-- Centered Logo -->
         <ImageView
@@ -24,12 +24,13 @@
             android:layout_height="80dp"
             android:layout_centerInParent="true"
             android:src="@drawable/now_logo" />
+
         <ImageView
             android:id="@+id/dice"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_launcher_foreground"/>
+            android:src="@drawable/ic_launcher_foreground" />
     </RelativeLayout>
 
     <!-- Content Area with ScrollView -->
@@ -48,18 +49,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:text="지금 무엇이 끌리시나요?"
                 android:textSize="28sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="16dp" />
+                android:textStyle="bold" />
 
             <!-- Buttons Row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginBottom="16dp"
                 android:gravity="center"
-                android:layout_marginBottom="16dp">
+                android:orientation="horizontal">
 
                 <!-- Webtoon Button -->
                 <Button
@@ -69,7 +70,7 @@
                     android:layout_weight="1"
                     android:background="#009000"
                     android:text="WEBTOONS"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <!-- Movie Button -->
                 <Button
@@ -79,7 +80,7 @@
                     android:layout_weight="1"
                     android:background="#900000"
                     android:text="COMICS &amp; MOVIE"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <!-- Book Button -->
                 <Button
@@ -87,9 +88,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="#000090"
                     android:text="NOVELS"
-                    android:textStyle="bold"
-                    android:background="#000090"/>
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <!-- Your additional content here -->
@@ -98,116 +99,120 @@
                 android:layout_height="wrap_content"
                 android:text="NOW's Random Pick"
                 android:textSize="24sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
-            <GridLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
-            <GridLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_column="0"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                >
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="110dp"
-                    android:layout_height="140dp"
-                    android:layout_row="0"
-                    android:layout_column="0"
-                    tools:layout_editor_absoluteX="140dp"
-                    tools:layout_editor_absoluteY="98dp"
-                    tools:srcCompat="@tools:sample/avatars" />
-
-                <TextView
-                    android:id="@+id/test"
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:layout_row="1"
-                    android:layout_column="0"
-                    android:text=""
-                    android:textColor="#ffffff"
-                    android:textAlignment="viewStart"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </GridLayout>
-            <GridLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:columnCount="1"
-                android:rowCount="2"
-                android:layout_column="1"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                >
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="110dp"
-                    android:layout_height="140dp"
-                    android:layout_row="0"
-                    android:layout_column="0"
-                    tools:layout_editor_absoluteX="140dp"
-                    tools:layout_editor_absoluteY="98dp"
-                    tools:srcCompat="@tools:sample/avatars" />
-                <TextView
-                    android:id="@+id/test2"
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:layout_row="1"
-                    android:layout_column="0"
-                    android:text=""
-                    android:textColor="#ffffff"
-                    android:textAlignment="viewStart"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </GridLayout>
-            <GridLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:columnCount="1"
-                android:rowCount="2"
-                android:layout_column="2"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                >
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="110dp"
-                    android:layout_height="140dp"
-                    android:layout_row="0"
-                    android:layout_column="0"
-                    tools:layout_editor_absoluteX="140dp"
-                    tools:layout_editor_absoluteY="98dp"
-                    tools:srcCompat="@tools:sample/avatars" />
-                <TextView
-                    android:id="@+id/test3"
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:layout_row="1"
-                    android:layout_column="0"
-                    android:text=""
-                    android:textColor="#ffffff"
-                    android:textAlignment="viewStart"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </GridLayout>
-        </GridLayout>
             <GridLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp">
+
+                <GridLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_column="0"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="110dp"
+                        android:layout_height="140dp"
+                        android:layout_row="0"
+                        android:layout_column="0"
+                        tools:layout_editor_absoluteX="140dp"
+                        tools:layout_editor_absoluteY="98dp"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                    <TextView
+                        android:id="@+id/test"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_column="0"
+                        android:text=""
+                        android:textAlignment="viewStart"
+                        android:textColor="#ffffff"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </GridLayout>
+
+                <GridLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:columnCount="1"
+                    android:rowCount="2">
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="110dp"
+                        android:layout_height="140dp"
+                        android:layout_row="0"
+                        android:layout_column="0"
+                        tools:layout_editor_absoluteX="140dp"
+                        tools:layout_editor_absoluteY="98dp"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                    <TextView
+                        android:id="@+id/test2"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_column="0"
+                        android:text=""
+                        android:textAlignment="viewStart"
+                        android:textColor="#ffffff"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </GridLayout>
+
+                <GridLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:columnCount="1"
+                    android:rowCount="2">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="110dp"
+                        android:layout_height="140dp"
+                        android:layout_row="0"
+                        android:layout_column="0"
+                        tools:layout_editor_absoluteX="140dp"
+                        tools:layout_editor_absoluteY="98dp"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                    <TextView
+                        android:id="@+id/test3"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_column="0"
+                        android:text=""
+                        android:textAlignment="viewStart"
+                        android:textColor="#ffffff"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </GridLayout>
+            </GridLayout>
+
+            <GridLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -239,14 +244,15 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </GridLayout>
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:columnCount="1"
-                    android:rowCount="2"
                     android:layout_column="1"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginRight="5dp"
+                    android:columnCount="1"
+                    android:rowCount="2">
 
                     <ImageView
                         android:id="@+id/imageView5"
@@ -257,6 +263,7 @@
                         tools:layout_editor_absoluteX="140dp"
                         tools:layout_editor_absoluteY="98dp"
                         tools:srcCompat="@tools:sample/avatars" />
+
                     <TextView
                         android:id="@+id/test5"
                         android:layout_width="110dp"
@@ -270,14 +277,15 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </GridLayout>
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:columnCount="1"
-                    android:rowCount="2"
                     android:layout_column="2"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginRight="5dp"
+                    android:columnCount="1"
+                    android:rowCount="2">
 
                     <ImageView
                         android:id="@+id/imageView6"
@@ -288,6 +296,7 @@
                         tools:layout_editor_absoluteX="140dp"
                         tools:layout_editor_absoluteY="98dp"
                         tools:srcCompat="@tools:sample/avatars" />
+
                     <TextView
                         android:id="@+id/test6"
                         android:layout_width="110dp"
@@ -302,10 +311,12 @@
                         app:layout_constraintTop_toTopOf="parent" />
                 </GridLayout>
             </GridLayout>
+
             <GridLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp">
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -337,14 +348,15 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </GridLayout>
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:columnCount="1"
-                    android:rowCount="2"
                     android:layout_column="1"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginRight="5dp"
+                    android:columnCount="1"
+                    android:rowCount="2">
 
                     <ImageView
                         android:id="@+id/imageView8"
@@ -355,6 +367,7 @@
                         tools:layout_editor_absoluteX="140dp"
                         tools:layout_editor_absoluteY="98dp"
                         tools:srcCompat="@tools:sample/avatars" />
+
                     <TextView
                         android:id="@+id/test8"
                         android:layout_width="110dp"
@@ -368,14 +381,15 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </GridLayout>
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:columnCount="1"
-                    android:rowCount="2"
                     android:layout_column="2"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginRight="5dp"
+                    android:columnCount="1"
+                    android:rowCount="2">
 
                     <ImageView
                         android:id="@+id/imageView9"
@@ -386,6 +400,7 @@
                         tools:layout_editor_absoluteX="140dp"
                         tools:layout_editor_absoluteY="98dp"
                         tools:srcCompat="@tools:sample/avatars" />
+
                     <TextView
                         android:id="@+id/test9"
                         android:layout_width="110dp"
@@ -400,10 +415,12 @@
                         app:layout_constraintTop_toTopOf="parent" />
                 </GridLayout>
             </GridLayout>
+
             <GridLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp">
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -435,14 +452,15 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </GridLayout>
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:columnCount="1"
-                    android:rowCount="2"
                     android:layout_column="1"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginRight="5dp"
+                    android:columnCount="1"
+                    android:rowCount="2">
 
                     <ImageView
                         android:id="@+id/imageView11"
@@ -453,6 +471,7 @@
                         tools:layout_editor_absoluteX="140dp"
                         tools:layout_editor_absoluteY="98dp"
                         tools:srcCompat="@tools:sample/avatars" />
+
                     <TextView
                         android:id="@+id/test11"
                         android:layout_width="110dp"
@@ -466,14 +485,15 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </GridLayout>
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:columnCount="1"
-                    android:rowCount="2"
                     android:layout_column="2"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginRight="5dp"
+                    android:columnCount="1"
+                    android:rowCount="2">
 
                     <ImageView
                         android:id="@+id/imageView12"
@@ -484,6 +504,7 @@
                         tools:layout_editor_absoluteX="140dp"
                         tools:layout_editor_absoluteY="98dp"
                         tools:srcCompat="@tools:sample/avatars" />
+
                     <TextView
                         android:id="@+id/test12"
                         android:layout_width="110dp"
@@ -498,10 +519,12 @@
                         app:layout_constraintTop_toTopOf="parent" />
                 </GridLayout>
             </GridLayout>
+
             <GridLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp">
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -533,14 +556,15 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </GridLayout>
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:columnCount="1"
-                    android:rowCount="2"
                     android:layout_column="1"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginRight="5dp"
+                    android:columnCount="1"
+                    android:rowCount="2">
 
                     <ImageView
                         android:id="@+id/imageView14"
@@ -551,6 +575,7 @@
                         tools:layout_editor_absoluteX="140dp"
                         tools:layout_editor_absoluteY="98dp"
                         tools:srcCompat="@tools:sample/avatars" />
+
                     <TextView
                         android:id="@+id/test14"
                         android:layout_width="110dp"
@@ -564,14 +589,15 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </GridLayout>
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:columnCount="1"
-                    android:rowCount="2"
                     android:layout_column="2"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginRight="5dp"
+                    android:columnCount="1"
+                    android:rowCount="2">
 
                     <ImageView
                         android:id="@+id/imageView15"
@@ -582,6 +608,7 @@
                         tools:layout_editor_absoluteX="140dp"
                         tools:layout_editor_absoluteY="98dp"
                         tools:srcCompat="@tools:sample/avatars" />
+
                     <TextView
                         android:id="@+id/test15"
                         android:layout_width="110dp"
@@ -596,10 +623,12 @@
                         app:layout_constraintTop_toTopOf="parent" />
                 </GridLayout>
             </GridLayout>
+
             <GridLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp">
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -631,14 +660,15 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </GridLayout>
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:columnCount="1"
-                    android:rowCount="2"
                     android:layout_column="1"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginRight="5dp"
+                    android:columnCount="1"
+                    android:rowCount="2">
 
                     <ImageView
                         android:id="@+id/imageView17"
@@ -649,6 +679,7 @@
                         tools:layout_editor_absoluteX="140dp"
                         tools:layout_editor_absoluteY="98dp"
                         tools:srcCompat="@tools:sample/avatars" />
+
                     <TextView
                         android:id="@+id/test17"
                         android:layout_width="110dp"
@@ -662,14 +693,15 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </GridLayout>
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:columnCount="1"
-                    android:rowCount="2"
                     android:layout_column="2"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginRight="5dp"
+                    android:columnCount="1"
+                    android:rowCount="2">
 
                     <ImageView
                         android:id="@+id/imageView18"
@@ -680,6 +712,7 @@
                         tools:layout_editor_absoluteX="140dp"
                         tools:layout_editor_absoluteY="98dp"
                         tools:srcCompat="@tools:sample/avatars" />
+
                     <TextView
                         android:id="@+id/test18"
                         android:layout_width="110dp"
@@ -694,10 +727,12 @@
                         app:layout_constraintTop_toTopOf="parent" />
                 </GridLayout>
             </GridLayout>
+
             <GridLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp">
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -729,14 +764,15 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </GridLayout>
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:columnCount="1"
-                    android:rowCount="2"
                     android:layout_column="1"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginRight="5dp"
+                    android:columnCount="1"
+                    android:rowCount="2">
 
                     <ImageView
                         android:id="@+id/imageView20"
@@ -747,6 +783,7 @@
                         tools:layout_editor_absoluteX="140dp"
                         tools:layout_editor_absoluteY="98dp"
                         tools:srcCompat="@tools:sample/avatars" />
+
                     <TextView
                         android:id="@+id/test20"
                         android:layout_width="110dp"
@@ -760,14 +797,15 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </GridLayout>
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:columnCount="1"
-                    android:rowCount="2"
                     android:layout_column="2"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginRight="5dp"
+                    android:columnCount="1"
+                    android:rowCount="2">
 
                     <ImageView
                         android:id="@+id/imageView21"
@@ -778,6 +816,7 @@
                         tools:layout_editor_absoluteX="140dp"
                         tools:layout_editor_absoluteY="98dp"
                         tools:srcCompat="@tools:sample/avatars" />
+
                     <TextView
                         android:id="@+id/test21"
                         android:layout_width="110dp"

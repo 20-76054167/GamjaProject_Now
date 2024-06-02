@@ -46,8 +46,8 @@ public class ProgramActivity extends AppCompatActivity {
     TextView programSU;
     String[] tableList = {"couplay", "kakaowebtoon", "kpnovel", "naverwebtoon", "netflix", "watcha"};
     String[] GenretableList = {"couplay_genre", "kakaowebtoon_genre", "kpnovel_genre", "naverwebtoon_genre", "netflix_genre", "watcha_genre"};
-    ImageView[] iv_imagearr = new ImageView[10];
-    TextView[] testArr = new TextView[10];
+    ImageView[] iv_imagearr = new ImageView[12];
+    TextView[] testArr = new TextView[12];
     private Content[] resultG;
 
     private Content[] result;
@@ -78,11 +78,14 @@ public class ProgramActivity extends AppCompatActivity {
         String image = intent.getStringExtra("image");
         String actor = intent.getStringExtra("actor");
         int id = intent.getIntExtra("id", -1);
+        String url = intent.getStringExtra("url");
+
 
         String tableName = intent.getStringExtra("tableName");
 
         Log.d("p-id", String.valueOf(id));
         Log.d("tablename", tableName != null ? tableName : "DefaultMessage");
+        Log.d("Content_URL", "Content_URL : " + url);
 
 
         if (tableName.equals(tableList[0])) {
@@ -159,6 +162,8 @@ public class ProgramActivity extends AppCompatActivity {
         testArr[7] = (TextView) findViewById(R.id.test8);
         testArr[8] = (TextView) findViewById(R.id.test9);
         testArr[9] = (TextView) findViewById(R.id.test10);
+        testArr[10] = (TextView) findViewById(R.id.test11);
+        testArr[11] = (TextView) findViewById(R.id.test12);
 
         iv_imagearr[0] = (ImageView) findViewById(R.id.imageView);
         iv_imagearr[1] = (ImageView) findViewById(R.id.imageView2);
@@ -170,6 +175,8 @@ public class ProgramActivity extends AppCompatActivity {
         iv_imagearr[7] = (ImageView) findViewById(R.id.imageView8);
         iv_imagearr[8] = (ImageView) findViewById(R.id.imageView9);
         iv_imagearr[9] = (ImageView) findViewById(R.id.imageView10);
+        iv_imagearr[10] = (ImageView) findViewById(R.id.imageView11);
+        iv_imagearr[11] = (ImageView) findViewById(R.id.imageView12);
 
 
         fetchGidAndProceed(tableName, id);
@@ -189,7 +196,7 @@ public class ProgramActivity extends AppCompatActivity {
                     ContentGenre[] resultGenre = response.body();
                     Gid = resultGenre[0].getGenre_id();
                     Log.d("genre_id", String.valueOf(Gid));
-                    fetchGenreDataFromApi(tableName, Gid, 10);
+                    fetchGenreDataFromApi(tableName, Gid, 12);
                 }
             }
             @Override
