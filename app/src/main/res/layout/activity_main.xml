@@ -29,8 +29,9 @@
             android:id="@+id/dice"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_margin="16dp"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_launcher_foreground" />
+            android:src="@drawable/dicelogo" />
     </RelativeLayout>
 
     <!-- Content Area with ScrollView -->
@@ -52,6 +53,7 @@
                 android:layout_marginBottom="16dp"
                 android:text="지금 무엇이 끌리시나요?"
                 android:textSize="28sp"
+                android:textColor="#ffffff"
                 android:textStyle="bold" />
 
             <!-- Buttons Row -->
@@ -99,7 +101,8 @@
                 android:layout_height="wrap_content"
                 android:text="NOW's Random Pick"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="#ffffff"/>
 
             <GridLayout
                 android:layout_width="wrap_content"

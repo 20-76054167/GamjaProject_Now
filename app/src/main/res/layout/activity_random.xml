@@ -27,7 +27,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_launcher_foreground"/>
+            android:src="@drawable/dicelogo"/>
     </RelativeLayout>
 
 
@@ -51,6 +51,7 @@
         android:layout_marginTop="427dp"
         android:text="제작진:"
         android:textSize="18dp"
+        android:textColor="#ffffff"
         android:textAlignment="center"/>
 
 
@@ -83,6 +84,7 @@
         android:text="제목:"
         android:textSize="24dp"
         android:textStyle="bold"
+        android:textColor="#ffffff"
         android:textAlignment="center"/>
 
 

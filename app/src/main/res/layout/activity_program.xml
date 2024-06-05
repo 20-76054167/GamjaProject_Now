@@ -32,7 +32,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="69dp"
+        android:layout_marginTop="85dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -42,7 +42,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="172dp"
-        android:layout_marginTop="111dp"
+        android:layout_marginTop="127dp"
         android:text="제작진:"
         android:textSize="18dp" />
 
@@ -57,23 +57,6 @@
     <!--        android:text="줄거리:"-->
     <!--        android:textSize="14dp"-->
     <!--        />-->
-    <ScrollView
-        android:layout_width="220dp"
-        android:layout_height="133dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="172dp"
-        android:layout_marginTop="157dp"
-        android:fillViewport="true">
-
-        <TextView
-            android:id="@+id/programsummary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="100"
-            android:text="줄거리:"
-            android:textSize="14dp" />
-    </ScrollView>
 
     <!--    <Button-->
     <!--        android:id="@+id/linkButton"-->
@@ -86,6 +69,24 @@
     <!--        android:text="보러가기>>"-->
     <!--        android:textSize="25dp" />-->
 
+    <ScrollView
+        android:layout_width="220dp"
+        android:layout_height="133dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="175dp"
+        android:fillViewport="true">
+
+        <TextView
+            android:id="@+id/programsummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="100"
+            android:text="줄거리:"
+            android:textSize="14dp" />
+    </ScrollView>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -94,6 +95,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="363dp"
         android:text="장르 추천"
+        android:textColor="#ffffff"
         android:textSize="26dp"
         android:textStyle="bold" />
 
@@ -104,9 +106,10 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="172dp"
-        android:layout_marginTop="69dp"
+        android:layout_marginTop="85dp"
         android:text="제목:"
         android:textSize="24dp"
+        android:textColor="#ffffff"
         android:textStyle="bold" />
 
     <ScrollView
