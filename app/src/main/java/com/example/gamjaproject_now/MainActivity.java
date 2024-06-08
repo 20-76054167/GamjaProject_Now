@@ -219,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra("image", content.getImg());
                             intent.putExtra("actor", content.getActor());
                             intent.putExtra("url", content.getUrl());
+                            Log.d("URL", content.getUrl());
 
 
                             testArr[CurrentIndex].setOnClickListener(v ->

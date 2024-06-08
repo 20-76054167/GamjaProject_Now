@@ -3,6 +3,7 @@ package com.example.gamjaproject_now;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -75,6 +76,7 @@ public class RandomActivity extends AppCompatActivity {
 
         fetchDataFromApi();
 
+
 //        137, 224, 4816, 657, 305, 200;
     }
 
@@ -104,6 +106,12 @@ public class RandomActivity extends AppCompatActivity {
                             programDi.setText(result[0].getDirector());
                             programSU.setText(result[0].getDescription());
                             new RandomActivity.DownloadFilesTask().execute(result[0].getImg());
+                            programV.setOnClickListener(new View.OnClickListener(){
+                                public void onClick(View v){
+                                    Intent LinkIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(result[0].getUrl()));
+                                    startActivity(LinkIntent);
+                                }
+                            });
                         }
 
 

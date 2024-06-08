@@ -4,6 +4,7 @@ package com.example.gamjaproject_now;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -181,6 +182,12 @@ public class ProgramActivity extends AppCompatActivity {
 
         fetchGidAndProceed(tableName, id);
         Log.d("genre__id", String.valueOf(Gid));
+        programV.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent LinkIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(LinkIntent);
+            }
+        });
 
 //        137, 224, 4816, 657, 305, 200;
 
@@ -237,6 +244,7 @@ public class ProgramActivity extends AppCompatActivity {
                         intent[i].putExtra("image", resultG[index].getImg());
                         intent[i].putExtra("id", resultG[index].getId());
                         intent[i].putExtra("actor", resultG[index].getActor());
+                        intent[i].putExtra("url", resultG[index].getUrl());
                     }
 
                 } else {
