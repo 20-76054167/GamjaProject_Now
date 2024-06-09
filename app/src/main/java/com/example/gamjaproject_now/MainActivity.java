@@ -50,8 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
     private Content[] result;
     private Count[] resultP;
-    String[] tableList = {"couplay", "kakaowebtoon", "kpnovel", "naverwebtoon", "netflix", "watcha"};
-    int[] tableCounts = {137, 224, 4816, 657, 305, 200};
+    String[] tableList = {"couplay", "kpwebtoon", "kpnovel", "naverwebtoon", "netflix", "watcha"};
+
+    int tC;
 
     Random rand = new Random();
     int PageRandom;
@@ -125,15 +126,15 @@ public class MainActivity extends AppCompatActivity {
         iv_imagearr[20] = (ImageView) findViewById(R.id.imageView21);
 
 
-        View.OnClickListener dice = new View.OnClickListener(){
-            public void onClick(View v){
+        View.OnClickListener dice = new View.OnClickListener() {
+            public void onClick(View v) {
                 Intent intentD = new Intent(MainActivity.this, RandomActivity.class);
                 startActivity(intentD);
             }
         };
 
-        View.OnClickListener reroll = new View.OnClickListener(){
-            public void onClick(View v){
+        View.OnClickListener reroll = new View.OnClickListener() {
+            public void onClick(View v) {
                 Intent intentR = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(intentR);
                 finish();
@@ -172,93 +173,183 @@ public class MainActivity extends AppCompatActivity {
         buttonTag[0].setOnClickListener(buttonTagmove);
         buttonTag[1].setOnClickListener(buttonTagmove2);
         buttonTag[2].setOnClickListener(buttonTagmove3);
-//        couplay137, kakaowebtoon224, kpnovel4816, naverwebtoon657, netflix305, watcha200;
+//        couplay137, kakaowebtoon224, kpnovel4816, naverwebtoon2982, netflix305, watcha200;
 
         fetchDataFromApi();
     }
 
-
-
-
     private void fetchDataFromApi() {
         for (All = 0; All < pagingUnit; All++) {
             String tableName = tableList[rand.nextInt(tableList.length)];
-            if (tableName.equals(tableList[0])) {
-                PageRandom = (int) (Math.random() * 137) + 1;
-            } else if (tableName.equals(tableList[1])) {
-                PageRandom = (int) (Math.random() * 224) + 1;
-            } else if (tableName.equals(tableList[2])) {
-                PageRandom = (int) (Math.random() * 4816) + 1;
-            } else if (tableName.equals(tableList[3])) {
-                PageRandom = (int) (Math.random() * 657) + 1;
-            } else if (tableName.equals(tableList[4])) {
-                PageRandom = (int) (Math.random() * 305) + 1;
-            } else if (tableName.equals(tableList[5])) {
-                PageRandom = (int) (Math.random() * 200) + 1;
-            }
+            Call<Count[]> countCall = APIController.getCountCall(tableName);
             int CurrentIndex = All;
-            Call<Content[]> call = APIController.getTestCall(tableName, PageRandom, 1);
-            call.enqueue(new Callback<Content[]>() {
+            countCall.enqueue(new Callback<Count[]>() {
                 @Override
-                public void onResponse(Call<Content[]> call, Response<Content[]> response) {
+                public void onResponse(Call<Count[]> countCall, Response<Count[]> response) {
                     if (response.isSuccessful()) {
-                        result = response.body();
+                        Count[] tableCounts = response.body();
+                        tC = tableCounts[0].getCnt();
 
-                        if (CurrentIndex < pagingUnit && result != null && result.length > 0) {
-                            Content content = result[0];
-
-                            testArr[CurrentIndex].append(content.getTitle());
-                            new DownloadFilesTask(CurrentIndex).execute(content.getImg());
-
-                            Intent intent = new Intent(MainActivity.this, ProgramActivity.class);
-                            intent.putExtra("tableName", tableName);
-                            intent.putExtra("id", content.getId());
-                            intent.putExtra("title", content.getTitle());
-                            intent.putExtra("director", content.getDirector());
-                            intent.putExtra("description", content.getDescription());
-                            intent.putExtra("image", content.getImg());
-                            intent.putExtra("actor", content.getActor());
-                            intent.putExtra("url", content.getUrl());
-                            Log.d("URL", content.getUrl());
-
-
-                            testArr[CurrentIndex].setOnClickListener(v ->
-                                    startActivity(intent));
-                            iv_imagearr[CurrentIndex].setOnClickListener(v ->
-                                    startActivity(intent));
-                        } else {
-                            Log.e("API Response", "Invalid data or index out of bounds");
-                        }
-//                        Log.d("img_link", "img_link : " + result[i].getImg());
-//                            testArr[All].append(result[PageRandom].getTitle());
-//                            new DownloadFilesTask().execute(result[PageRandom].getImg());
-//                            intent[All] = new Intent(MainActivity.this, ProgramActivity.class);
-//                            Log.d("mid", String.valueOf(result[PageRandom].getId()));
-//                            intent[All].putExtra("tableName", tableList);
-//                            intent[All].putExtra("id", result[PageRandom].getId());
-//                            intent[All].putExtra("title", result[PageRandom].getTitle());
-//                            intent[All].putExtra("director", result[PageRandom].getDirector());
-//                            intent[All].putExtra("description", result[PageRandom].getDescription());
-//                            intent[All].putExtra("image", result[PageRandom].getImg());
-//                            intent[All].putExtra("actor", result[PageRandom].getActor());
-//                        }
-                    } else {
-                        Toast.makeText(MainActivity.this, "API call failed", Toast.LENGTH_SHORT).show();
+                        fetchContentDataFromApi(tableName, CurrentIndex);
                     }
                 }
+
                 @Override
-                public void onFailure(Call<Content[]> call, Throwable t) {
-                    Log.d("결과", "실패 : " + t.getMessage());
+                public void onFailure(Call<Count[]> countCall, Throwable t) {
+
                 }
             });
+
         }
     }
 
+    private void fetchContentDataFromApi(String tableName, int CurrentIndex) {
+        if (tableName.equals(tableList[0])) {
+            PageRandom = (int) (Math.random() * tC) + 1; //couplay
+            Log.d("couplayCount", String.valueOf(tC));
+        } else if (tableName.equals(tableList[1])) {
+            PageRandom = (int) (Math.random() * tC) + 1; //kpwebtoon
+            Log.d("kakaowebtoonCount", String.valueOf(tC));
+        } else if (tableName.equals(tableList[2])) {
+            PageRandom = (int) (Math.random() * tC) + 1; //kpnovel
+            Log.d("kpnovelCount", String.valueOf(tC));
+        } else if (tableName.equals(tableList[3])) {
+            PageRandom = (int) (Math.random() * tC) + 1; //naverwebtoon
+            Log.d("naverwebtoonCount", String.valueOf(tC));
+        } else if (tableName.equals(tableList[4])) {
+            PageRandom = (int) (Math.random() * tC) + 1; // netflix
+            Log.d("netflixCount", String.valueOf(tC));
+        } else if (tableName.equals(tableList[5])) {
+            PageRandom = (int) (Math.random() * tC) + 1; //watcha
+            Log.d("watchaCount", String.valueOf(tC));
+        }
+
+        Call<Content[]> call = APIController.getTestCall(tableName, PageRandom, 1);
+        call.enqueue(new Callback<Content[]>() {
+            @Override
+            public void onResponse(Call<Content[]> call, Response<Content[]> response) {
+                if (response.isSuccessful()) {
+                    result = response.body();
+
+                    if (CurrentIndex < pagingUnit && result != null && result.length > 0) {
+                        Content content = result[0];
+
+                        testArr[CurrentIndex].append(content.getTitle());
+                        new DownloadFilesTask(CurrentIndex).execute(content.getImg());
+
+                        Intent intent = new Intent(MainActivity.this, ProgramActivity.class);
+                        intent.putExtra("tableName", tableName);
+                        intent.putExtra("id", content.getId());
+                        intent.putExtra("title", content.getTitle());
+                        intent.putExtra("director", content.getDirector());
+                        intent.putExtra("description", content.getDescription());
+                        intent.putExtra("image", content.getImg());
+                        intent.putExtra("actor", content.getActor());
+                        intent.putExtra("url", content.getUrl());
+                        Log.d("URL", content.getUrl());
+
+
+                        testArr[CurrentIndex].setOnClickListener(v ->
+                                startActivity(intent));
+                        iv_imagearr[CurrentIndex].setOnClickListener(v ->
+                                startActivity(intent));
+                    } else {
+                        Log.e("API Response", "Invalid data or index out of bounds");
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "API call failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Content[]> call, Throwable t) {
+                Log.d("결과", "실패 : " + t.getMessage());
+            }
+        });
+    }
+
+
+//    private void fetchDataFromApi() {
+//        for (All = 0; All < pagingUnit; All++) {
+//            String tableName = tableList[rand.nextInt(tableList.length)];
+//            if (tableName.equals(tableList[0])) {
+//                PageRandom = (int) (Math.random() * 137) + 1; //couplay
+//            } else if (tableName.equals(tableList[1])) {
+//                PageRandom = (int) (Math.random() * 224) + 1; //kakaowebtoon
+//            } else if (tableName.equals(tableList[2])) {
+//                PageRandom = (int) (Math.random() * 4816) + 1; //kpnovel
+//            } else if (tableName.equals(tableList[3])) {
+//                PageRandom = (int) (Math.random() * 2982) + 1; //naverwebtoon
+//            } else if (tableName.equals(tableList[4])) {
+//                PageRandom = (int) (Math.random() * 305) + 1; // netflix
+//            } else if (tableName.equals(tableList[5])) {
+//                PageRandom = (int) (Math.random() * 200) + 1; //watcha
+//            }
+//            int CurrentIndex = All;
+//            Call<Content[]> call = APIController.getTestCall(tableName, PageRandom, 1);
+//            call.enqueue(new Callback<Content[]>() {
+//                @Override
+//                public void onResponse(Call<Content[]> call, Response<Content[]> response) {
+//                    if (response.isSuccessful()) {
+//                        result = response.body();
+//
+//                        if (CurrentIndex < pagingUnit && result != null && result.length > 0) {
+//                            Content content = result[0];
+//
+//                            testArr[CurrentIndex].append(content.getTitle());
+//                            new DownloadFilesTask(CurrentIndex).execute(content.getImg());
+//
+//                            Intent intent = new Intent(MainActivity.this, ProgramActivity.class);
+//                            intent.putExtra("tableName", tableName);
+//                            intent.putExtra("id", content.getId());
+//                            intent.putExtra("title", content.getTitle());
+//                            intent.putExtra("director", content.getDirector());
+//                            intent.putExtra("description", content.getDescription());
+//                            intent.putExtra("image", content.getImg());
+//                            intent.putExtra("actor", content.getActor());
+//                            intent.putExtra("url", content.getUrl());
+//                            Log.d("URL", content.getUrl());
+//
+//
+//                            testArr[CurrentIndex].setOnClickListener(v ->
+//                                    startActivity(intent));
+//                            iv_imagearr[CurrentIndex].setOnClickListener(v ->
+//                                    startActivity(intent));
+//                        } else {
+//                            Log.e("API Response", "Invalid data or index out of bounds");
+//                        }
+////                        Log.d("img_link", "img_link : " + result[i].getImg());
+////                            testArr[All].append(result[PageRandom].getTitle());
+////                            new DownloadFilesTask().execute(result[PageRandom].getImg());
+////                            intent[All] = new Intent(MainActivity.this, ProgramActivity.class);
+////                            Log.d("mid", String.valueOf(result[PageRandom].getId()));
+////                            intent[All].putExtra("tableName", tableList);
+////                            intent[All].putExtra("id", result[PageRandom].getId());
+////                            intent[All].putExtra("title", result[PageRandom].getTitle());
+////                            intent[All].putExtra("director", result[PageRandom].getDirector());
+////                            intent[All].putExtra("description", result[PageRandom].getDescription());
+////                            intent[All].putExtra("image", result[PageRandom].getImg());
+////                            intent[All].putExtra("actor", result[PageRandom].getActor());
+////                        }
+//                    } else {
+//                        Toast.makeText(MainActivity.this, "API call failed", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//                @Override
+//                public void onFailure(Call<Content[]> call, Throwable t) {
+//                    Log.d("결과", "실패 : " + t.getMessage());
+//                }
+//            });
+//        }
+//    }
+
     private class DownloadFilesTask extends AsyncTask<String, Void, Bitmap> {
         private int index;
+
         public DownloadFilesTask(int index) {
             this.index = index;
         }
+
         @Override
         protected Bitmap doInBackground(String... strings) {
             Bitmap bmp = null;
@@ -273,11 +364,11 @@ public class MainActivity extends AppCompatActivity {
                 connection.setRequestProperty("User-Agent", "Mozilla/5.0"); // User-Agent 설정
                 int responseCode = connection.getResponseCode();//추가사항
 
-                if(responseCode == HttpURLConnection.HTTP_OK) {
+                if (responseCode == HttpURLConnection.HTTP_OK) {
                     inputStream = connection.getInputStream();
                     bmp = BitmapFactory.decodeStream(inputStream);
 //                    bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream()); //이거 남겨 이게 원본
-                }else{
+                } else {
                     Log.e("DownloadFilesTask", "서버 응답 오류: " + responseCode + " URL: " + img_url);
                 }
             } catch (MalformedURLException e) {
@@ -286,8 +377,8 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 Log.e("DownloadFilesTask", "IOException: " + e.getMessage());
                 e.printStackTrace();
-            }finally{
-                if(inputStream != null){
+            } finally {
+                if (inputStream != null) {
                     try {
                         inputStream.close();
                     } catch (IOException e) {

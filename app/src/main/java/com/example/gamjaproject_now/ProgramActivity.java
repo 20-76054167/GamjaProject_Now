@@ -45,8 +45,8 @@ public class ProgramActivity extends AppCompatActivity {
     TextView programDi;
 
     TextView programSU;
-    String[] tableList = {"couplay", "kakaowebtoon", "kpnovel", "naverwebtoon", "netflix", "watcha"};
-    String[] GenretableList = {"couplay_genre", "kakaowebtoon_genre", "kpnovel_genre", "naverwebtoon_genre", "netflix_genre", "watcha_genre"};
+    String[] tableList = {"couplay", "kpwebtoon", "kpnovel", "naverwebtoon", "netflix", "watcha"};
+    String[] GenretableList = {"couplay_genre", "kpwebtoon_genre", "kpnovel_genre", "naverwebtoon_genre", "netflix_genre", "watcha_genre"};
     ImageView[] iv_imagearr = new ImageView[12];
     TextView[] testArr = new TextView[12];
     private Content[] resultG;
@@ -92,7 +92,7 @@ public class ProgramActivity extends AppCompatActivity {
         if (tableName.equals(tableList[0])) {
             genretableN = "couplay_genre";
         } else if (tableName.equals(tableList[1])) {
-            genretableN = "kakaowebtoon_genre";
+            genretableN = "kpwebtoon_genre";
         } else if (tableName.equals(tableList[2])) {
             genretableN = "kpnovel_genre";
         } else if (tableName.equals(tableList[3])) {

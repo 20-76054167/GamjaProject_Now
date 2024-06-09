@@ -41,7 +41,7 @@ public class RandomActivity extends AppCompatActivity {
     TextView programNA;
     TextView programDi;
     TextView programSU;
-    String[] tableList = {"couplay", "kakaowebtoon", "kpnovel", "naverwebtoon", "netflix", "watcha"};
+    String[] tableList = {"couplay", "kpwebtoon", "kpnovel", "naverwebtoon", "netflix", "watcha"};
     String[] GenretableList = {"couplay_genre", "kakaowebtoon_genre", "kpnovel_genre", "naverwebtoon_genre", "netflix_genre", "watcha_genre"};
     String tableName;
     private Content[] result;
